@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kredi Riski Tahmini</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 20px; }
+        .container { max-width: 900px; margin: auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+        h1 { text-align: center; color: #007bff; margin-bottom: 25px; }
+        .form-row { display: flex; flex-wrap: wrap; margin: 0 -10px; }
+        .form-group { flex: 1 1 calc(33.333% - 20px); margin: 0 10px 20px 10px; min-width: 250px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9em; }
+        input[type="number"], select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 1em; }
+        button { width: 100%; padding: 12px; background-color: #28a745; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 1.1em; margin-top: 15px; transition: background-color 0.3s; }
+        button:hover { background-color: #218838; }
+        .result-box { margin-top: 30px; padding: 20px; border-radius: 8px; text-align: center; font-size: 1.2em; font-weight: bold; }
+        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .danger { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .warning { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏦 Kredi Riski Tahmin Aracı</h1>
+
+        {% if result %}
+            <div class="result-box {{ result.risk_level }}">
+                <h2>{{ result.status }}</h2>
+                {% if result.probability %}
+                    <p>Onaylanma Olasılığı: **{{ result.probability }}**</p>
+                {% endif %}
+                {% if result.error %}
+                    <p style="font-weight: normal; color: #555;">Hata Detayı: {{ result.error }}</p>
+                {% endif %}
+            </div>
+            <hr>
+        {% endif %}
+
+        <form method="POST">
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label for="Status">Mevcut Hesap Durumu:</label>
+                    <select name="Status" required>
+                        <option value="">Seçiniz</option>
+                        <option value="A11">&lt; 0 TL (Eksi Bakiye)</option>
+                        <option value="A12">0 ≤ x &lt; 200 TL</option>
+                        <option value="A13">≥ 200 TL veya Maaş Hesabı</option>
+                        <option value="A14">Hesap yok</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="Duration">Kredi Süresi (Ay):</label>
+                    <input type="number" name="Duration" min="1" max="72" placeholder="Örn: 24 (min 1, max 72)" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="CreditHistory">Kredi Geçmişi:</label>
+                    <select name="CreditHistory" required>
+                        <option value="">Seçiniz</option>
+                        <option value="A30">Gecikme yok / Ödenmiş</option>
+                        <option value="A31">Tüm krediler düzenli ödenmiş</option>
+                        <option value="A32">Mevcut kredilerde gecikme yok</option>
+                        <option value="A33">Eski kredilerde gecikme yaşanmış</option>
+                        <option value="A34">Geçmişte ciddi sorunlar (Çok kritik)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="Purpose">Kredi Amacı:</label>
+                    <select name="Purpose" required>
+                        <option value="">Seçiniz</option>
+                        <option value="A40">Yeni araba</option>
+                        <option value="A41">Kullanılmış araba</option>
+                        <option value="A42">Mobilya/Ekipman</option>
+                        <option value="A43">Radyo/Televizyon</option>
+                        <option value="A44">Ev tadilatı</option>
+                        <option value="A45">Eğitim</option>
+                        <option value="A46">İş geliştirme</option>
+                        <option value="A49">Tatil/Diğer</option>
+                        <option value="A410">Giyim/Ayakkabı</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="CreditAmount">Kredi Miktarı (TL):</label>
+                    <input type="number" name="CreditAmount" min="250" max="18424" placeholder="Örn: 3500 TL" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="Savings">Tasarruf Hesabı:</label>
+                    <select name="Savings" required>
+                        <option value="">Seçiniz</option>
+                        <option value="A61">&lt; 100 TL</option>
+                        <option value="A62">100 ≤ x &lt; 500 TL</option>
+                        <option value="A63">500 ≤ x &lt; 1000 TL</option>
+                        <option value="A64">≥ 1000 TL</option>
+                        <option value="A65">Bilinmiyor/Tasarruf yok</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="EmploymentSince">İstihdam Durumu/Süresi:</label>
+                    <select name="EmploymentSince" required>
+                        <option value="">Seçiniz</option>
+                        <option value="A71">İşsiz</option>
+                        <option value="A72">&lt; 1 yıl</option>
+                        <option value="A73">1 ≤ x &lt; 4 yıl</option>
+                        <option value="A74">4 ≤ x &lt; 7 yıl</option>
+                        <option value="A75">≥ 7 yıl</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="InstallmentRate">Taksit Oranı (%):</label>
+                    <input type="number" name="InstallmentRate" min="1" max="4" placeholder="Gelirin %'si olarak 1-4" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="PersonalStatusSex">Kişisel Durum & Cinsiyet:</label>
+                    <select name="PersonalStatusSex" required>
+                        <option value="">Seçiniz</option>
+                        <option value="A91">Erkek: Boşanmış/Ayrılmış</option>
+                        <option value="A92">Kadın: Boşanmış/Ayrılmış/Evli</option>
+                        <option value="A93">Erkek: Evli/Dul</option>
+                        <option value="A94">Erkek: Bekar</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="OtherDebtors">Diğer Borçlular/Kefiller:</label>
+                    <select name="OtherDebtors" required>
+                        <option value="">Seçiniz</option>
+                        <option value="A101">Yok</option>
+                        <option value="A102">Ortak Borçlu</option>
+                        <option value="A103">Kefil</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="PresentResidenceSince">Mevcut İkamet Süresi (Yıl):</label>
+                    <input type="number" name="PresentResidenceSince" min="1" max="4" placeholder="1-4 yıl" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="Property">Mülkiyet Tipi:</label>
+                    <select name="Property" required>
+                        <option value="">Seçiniz</option>
+                        <option value="A121">Gayrimenkul (Ev/Arsa)</option>
+                        <option value="A122">Hayat Sigortası / İnşaat Tasarrufları</option>
+                        <option value="A123">Araba veya Diğer Kullanılan Mülkler</option>
+                        <option value="A124">Bilinmiyor / Mülk yok</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="Age">Yaş:</label>
+                    <input type="number" name="Age" min="18" max="75" placeholder="Örn: 35" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="OtherInstallmentPlans">Diğer Taksit Planları:</label>
+                    <select name="OtherInstallmentPlans" required>
+                        <option value="">Seçiniz</option>
+                        <option value="A141">Banka</option>
+                        <option value="A142">Mağazalar/Kurumlar</option>
+                        <option value="A143">Yok</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="Housing">Konut Durumu:</label>
+                    <select name="Housing" required>
+                        <option value="">Seçiniz</option>
+                        <option value="A151">Kira</option>
+                        <option value="A152">Kendi Evi</option>
+                        <option value="A153">Kiracılığı bedelsiz/Diğer</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="NumberExistingCredits">Mevcut Kredi Sayısı:</label>
+                    <input type="number" name="NumberExistingCredits" min="1" max="4" placeholder="1-4 kredi" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="Job">Meslek:</label>
+                    <select name="Job" required>
+                        <option value="">Seçiniz</option>
+                        <option value="A171">İşsiz / Kayıtlı olmayan</option>
+                        <option value="A172">Niteliksiz / Yerleşik</option>
+                        <option value="A173">Nitelikli çalışan / Memur</option>
+                        <option value="A174">Yönetici / Serbest meslek</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="NumberPeopleMaintenance">Bakmakla Yükümlü Olduğu Kişi Sayısı:</label>
+                    <input type="number" name="NumberPeopleMaintenance" min="1" max="2" placeholder="1 veya 2" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="Telephone">Telefon (Tescilli):</label>
+                    <select name="Telephone" required>
+                        <option value="">Seçiniz</option>
+                        <option value="A191">Yok</option>
+                        <option value="A192">Var (Sabit hat/Kayıtlı GSM)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="ForeignWorker">Yabancı İşçi:</label>
+                    <select name="ForeignWorker" required>
+                        <option value="">Seçiniz</option>
+                        <option value="A201">Hayır</option>
+                        <option value="A202">Evet</option>
+                    </select>
+                </div>
+
+            </div>
+            <button type="submit">Kredi Riskini Hesapla</button>
+        </form>
+
+    </div>
+</body>
+</html>
