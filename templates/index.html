@@ -293,7 +293,10 @@
             margin-top: 10px;
         }
 
-        /* DÜZELTME: Result-box ve result-title renkleri */
+        /* HATA DÜZELTME: Eski genel renk sınıfları (success, danger, warning) 
+           kaldırıldı ve yerine sadece result-box ve içindeki metinlere 
+           uygulanan doğru sınıflar eklendi. */
+        
         .result-box.success {
             background: #d4edda;
             border: 3px solid #28a745;
@@ -307,13 +310,17 @@
             border: 3px solid #ffc107;
         }
         
-        .result-title.success {
+        /* DÜZELTME: Başlık (result-title) metin rengini net olarak ayarlamak için */
+        .result-box.success .result-title,
+        .result-box.success .result-probability {
             color: #155724; /* Başarılı yeşil metin */
         }
-        .result-title.danger {
+        .result-box.danger .result-title,
+        .result-box.danger .result-probability {
             color: #721c24; /* Tehlikeli kırmızı metin */
         }
-        .result-title.warning {
+        .result-box.warning .result-title,
+        .result-box.warning .result-probability {
             color: #856404; /* Uyarı sarı metin */
         }
 
@@ -344,7 +351,7 @@
         Veri Bilimi ve Makine Öğrenmesi Grup 1
     </div>
     
-    <div class="top-info bottom-left" data-key="dev_info"> 
+    <div class="top-info bottom-left"> 
         This site Designed & Developed and Deployed by Group 1
     </div>
 
@@ -560,7 +567,7 @@
                 'h1_title': 'Kredi Risk Analizi',
                 'subtitle': 'Gelişmiş yapay zeka algoritması ile kredi onay tahmini',
                 'group_info': 'Veri Bilimi ve Makine Öğrenmesi Grup 1',
-                'dev_info': 'Bu site Grup 1 tarafından tasarlandı, geliştirildi ve yayına alındı.', // DÜZELTME: Yeni çeviri metni
+                // 'dev_info' çeviri anahtarı, kullanıcının isteği üzerine KALDIRILDI.
                 'btn_calculate': '🔍 Kredi Riskini Hesapla',
                 'btn_reset': '🔄 Formu Sıfırla',
                 
@@ -663,7 +670,7 @@
                 'h1_title': 'Credit Risk Prediction Tool',
                 'subtitle': 'Credit approval prediction using an advanced AI algorithm',
                 'group_info': 'Data Science and Machine Learning Group 1',
-                'dev_info': 'This site Designed & Developed and Deployed by Group 1', // DÜZELTME: Yeni çeviri metni
+                // 'dev_info' çeviri anahtarı, kullanıcının isteği üzerine KALDIRILDI.
                 'btn_calculate': '🔍 Calculate Credit Risk',
                 'btn_reset': '🔄 Reset Form',
 
@@ -771,6 +778,7 @@
             // data-key'e sahip elementler için metin içeriğini güncelle
             document.querySelectorAll('[data-key]').forEach(element => {
                 const key = element.getAttribute('data-key');
+                // NOT: 'dev_info' gibi kaldırılan anahtarlar burada bir sorun yaratmayacaktır.
                 if (translations[lang][key]) {
                     element.textContent = translations[lang][key];
                 }
@@ -813,12 +821,11 @@
                     // Olasılık değerini (örn. "%85") koru
                     const strongElement = resultProbContainer.querySelector('strong');
                     const probabilityValue = strongElement ? strongElement.textContent : '';
-
-                    // Başlık ve olasılık etiketini güncelle
-                    // Sınıfı koruyarak sadece metni güncelle
-                    const currentClasses = resultTitle.className;
+                    
+                    // Başlık ve olasılık etiketini güncelle (CSS sınıfını koruyarak)
+                    const currentTitleClasses = resultTitle.className;
                     resultTitle.textContent = translations[lang][statusKey];
-                    resultTitle.className = currentClasses; // Sınıfları geri yükle (CSS için gerekli)
+                    resultTitle.className = currentTitleClasses; // Sınıfları geri yükle
                     
                     resultProbContainer.innerHTML = `${translations[lang]['res_probability']} <strong>${probabilityValue}</strong>`;
                 }
@@ -876,13 +883,13 @@
             
             // Mevcut dilin onay olasılığı etiketini al
             const probabilityLabel = translations[currentLang]['res_probability'];
-            const riskLevelClass = result.risk_level; // 'approved', 'warning', 'rejected'
+            const riskLevelClass = result.risk_level;
             
-            // DÜZELTME: result-title'a riskLevelClass eklendi
+            // Düzeltilen CSS sayesinde metin rengi artık doğru ayarlanacaktır.
             resultSection.innerHTML = `
                 <div class="result-box ${riskLevelClass}">
                     <div class="result-icon">${result.icon}</div>
-                    <div class="result-title ${riskLevelClass}">${result.status}</div>
+                    <div class="result-title">${result.status}</div>
                     <div class="result-probability">${probabilityLabel} <strong>${result.probability}</strong></div>
                     <div class="progress-bar">
                         <div class="progress-fill" style="width: ${probabilityNum}%"></div>
