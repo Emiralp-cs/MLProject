@@ -44,27 +44,27 @@
                     <label for="Status">Mevcut Hesap Durumu:</label>
                     <select name="Status" required>
                         <option value="">Seçiniz</option>
-                        <option value="A11">&lt; 0 TL (Eksi Bakiye)</option>
-                        <option value="A12">0 ≤ x &lt; 200 TL</option>
-                        <option value="A13">≥ 200 TL veya Maaş Hesabı</option>
-                        <option value="A14">Hesap yok</option>
+                        <option value="A11">Mevcut Hesap Bakiyesi &lt; 0 TL</option>
+                        <option value="A12">Mevcut Hesap Bakiyesi 0 ≤ x &lt; 200 TL</option>
+                        <option value="A13">Mevcut Hesap Bakiyesi ≥ 200 TL / Maaş Hesabı</option>
+                        <option value="A14">Kayıtlı Mevcut Hesap Yok</option>
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label for="Duration">Kredi Süresi (Ay):</label>
-                    <input type="number" name="Duration" min="1" max="72" placeholder="Örn: 24 (min 1, max 72)" required>
+                    <input type="number" name="Duration" min="4" max="72" placeholder="Örn: 24 (min 4, max 72)" required>
                 </div>
 
                 <div class="form-group">
                     <label for="CreditHistory">Kredi Geçmişi:</label>
                     <select name="CreditHistory" required>
                         <option value="">Seçiniz</option>
-                        <option value="A30">Gecikme yok / Ödenmiş</option>
-                        <option value="A31">Tüm krediler düzenli ödenmiş</option>
-                        <option value="A32">Mevcut kredilerde gecikme yok</option>
-                        <option value="A33">Eski kredilerde gecikme yaşanmış</option>
-                        <option value="A34">Geçmişte ciddi sorunlar (Çok kritik)</option>
+                        <option value="A30">Önceden Kredi Yok / Hepsi Düzenli Ödendi</option>
+                        <option value="A31">Bu Bankadaki Tüm Krediler Düzenli Ödendi</option>
+                        <option value="A32">Mevcut Kredilerde Gecikme Yok</option>
+                        <option value="A33">Eski Kredilerde Gecikme Yaşanmış</option>
+                        <option value="A34">Geçmişte Ciddi Sorunlar (Çok Kritik)</option>
                     </select>
                 </div>
 
@@ -79,14 +79,14 @@
                         <option value="A44">Ev tadilatı</option>
                         <option value="A45">Eğitim</option>
                         <option value="A46">İş geliştirme</option>
-                        <option value="A49">Tatil/Diğer</option>
-                        <option value="A410">Giyim/Ayakkabı</option>
+                        <option value="A49">Tatil / Diğer</option>
+                        <option value="A410">Giyim / Ayakkabı</option>
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label for="CreditAmount">Kredi Miktarı (TL):</label>
-                    <input type="number" name="CreditAmount" min="250" max="18424" placeholder="Örn: 3500 TL" required>
+                    <input type="number" name="CreditAmount" min="250" max="18424" placeholder="Örn: 3500 TL (min 250, max 18424)" required>
                 </div>
 
                 <div class="form-group">
@@ -97,7 +97,7 @@
                         <option value="A62">100 ≤ x &lt; 500 TL</option>
                         <option value="A63">500 ≤ x &lt; 1000 TL</option>
                         <option value="A64">≥ 1000 TL</option>
-                        <option value="A65">Bilinmiyor/Tasarruf yok</option>
+                        <option value="A65">Bilinmiyor / Tasarruf Yok</option>
                     </select>
                 </div>
 
@@ -122,10 +122,11 @@
                     <label for="PersonalStatusSex">Kişisel Durum & Cinsiyet:</label>
                     <select name="PersonalStatusSex" required>
                         <option value="">Seçiniz</option>
-                        <option value="A91">Erkek: Boşanmış/Ayrılmış</option>
-                        <option value="A92">Kadın: Boşanmış/Ayrılmış/Evli</option>
-                        <option value="A93">Erkek: Evli/Dul</option>
-                        <option value="A94">Erkek: Bekar</option>
+                        <option value="A93">Erkek: Bekar</option>
+                        <option value="A94">Erkek: Evli / Dul</option>
+                        <option value="A91">Erkek: Boşanmış / Ayrılmış</option>
+                        <option value="A95">Kadın: Bekar</option>
+                        <option value="A92">Kadın: Evli / Boşanmış / Ayrılmış</option>
                     </select>
                 </div>
 
@@ -151,13 +152,13 @@
                         <option value="A121">Gayrimenkul (Ev/Arsa)</option>
                         <option value="A122">Hayat Sigortası / İnşaat Tasarrufları</option>
                         <option value="A123">Araba veya Diğer Kullanılan Mülkler</option>
-                        <option value="A124">Bilinmiyor / Mülk yok</option>
+                        <option value="A124">Bilinmiyor / Mülk Yok</option>
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label for="Age">Yaş:</label>
-                    <input type="number" name="Age" min="18" max="75" placeholder="Örn: 35" required>
+                    <input type="number" name="Age" min="19" max="75" placeholder="Örn: 35 (min 19, max 75)" required>
                 </div>
 
                 <div class="form-group">
@@ -176,7 +177,7 @@
                         <option value="">Seçiniz</option>
                         <option value="A151">Kira</option>
                         <option value="A152">Kendi Evi</option>
-                        <option value="A153">Kiracılığı bedelsiz/Diğer</option>
+                        <option value="A153">Kiracılığı bedelsiz / Diğer</option>
                     </select>
                 </div>
 
@@ -189,10 +190,10 @@
                     <label for="Job">Meslek:</label>
                     <select name="Job" required>
                         <option value="">Seçiniz</option>
-                        <option value="A171">İşsiz / Kayıtlı olmayan</option>
-                        <option value="A172">Niteliksiz / Yerleşik</option>
-                        <option value="A173">Nitelikli çalışan / Memur</option>
-                        <option value="A174">Yönetici / Serbest meslek</option>
+                        <option value="A171">İşsiz / Kayıtsız Çalışan</option>
+                        <option value="A172">Niteliksiz / Yerleşik Çalışan</option>
+                        <option value="A173">Nitelikli Çalışan / Memur</option>
+                        <option value="A174">Yönetici / Serbest Meslek Sahibi</option>
                     </select>
                 </div>
 
