@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kredi Riski Tahmini</title>
+    <title data-key="title">Kredi Riski Tahmin Aracı</title>
     <style>
+        /* Genel Stil Ayarları */
         * {
             margin: 0;
             padding: 0;
@@ -13,7 +14,8 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            /* Sade mavi/açık gri tonları */
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
             min-height: 100vh;
             padding: 20px;
             position: relative;
@@ -24,34 +26,14 @@
         .bg-circle {
             position: fixed;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(0, 188, 212, 0.1); /* Açık cam göbeği tonu */
             animation: float 20s infinite ease-in-out;
             z-index: 0;
         }
 
-        .bg-circle:nth-child(1) {
-            width: 300px;
-            height: 300px;
-            top: -100px;
-            left: -100px;
-            animation-delay: 0s;
-        }
-
-        .bg-circle:nth-child(2) {
-            width: 200px;
-            height: 200px;
-            top: 50%;
-            right: -50px;
-            animation-delay: 5s;
-        }
-
-        .bg-circle:nth-child(3) {
-            width: 250px;
-            height: 250px;
-            bottom: -100px;
-            left: 30%;
-            animation-delay: 10s;
-        }
+        .bg-circle:nth-child(1) { width: 300px; height: 300px; top: -100px; left: -100px; animation-delay: 0s; }
+        .bg-circle:nth-child(2) { width: 200px; height: 200px; top: 50%; right: -50px; animation-delay: 5s; }
+        .bg-circle:nth-child(3) { width: 250px; height: 250px; bottom: -100px; left: 30%; animation-delay: 10s; }
 
         @keyframes float {
             0%, 100% { transform: translateY(0) rotate(0deg); }
@@ -61,25 +43,19 @@
         .container {
             max-width: 1200px;
             margin: auto;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(10px);
             padding: 40px;
             border-radius: 24px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             position: relative;
             z-index: 1;
             animation: slideIn 0.6s ease-out;
         }
 
         @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .header {
@@ -89,19 +65,14 @@
         }
 
         .header-icon {
-            font-size: 64px;
-            margin-bottom: 10px;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            /* Beyin emojisi kaldırıldı */
+            height: 0; 
         }
 
         h1 {
             font-size: 2.5em;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            /* Kurumsal mavi gradient */
+            background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -110,7 +81,7 @@
         }
 
         .subtitle {
-            color: #666;
+            color: #555;
             font-size: 1.1em;
         }
 
@@ -120,27 +91,7 @@
             gap: 24px;
             margin-bottom: 30px;
         }
-
-        .form-group {
-            animation: fadeInUp 0.6s ease-out backwards;
-        }
-
-        .form-group:nth-child(1) { animation-delay: 0.1s; }
-        .form-group:nth-child(2) { animation-delay: 0.15s; }
-        .form-group:nth-child(3) { animation-delay: 0.2s; }
-        .form-group:nth-child(4) { animation-delay: 0.25s; }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
+        
         label {
             display: block;
             margin-bottom: 8px;
@@ -153,25 +104,22 @@
         input[type="number"], select {
             width: 100%;
             padding: 14px 16px;
-            border: 2px solid #e0e0e0;
+            border: 1px solid #ddd;
             border-radius: 12px;
             font-size: 1em;
             transition: all 0.3s ease;
             background: white;
             color: #333;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         }
 
         input[type="number"]:focus, select:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
-            transform: translateY(-2px);
+            border-color: #00bcd4;
+            box-shadow: 0 0 0 4px rgba(0, 188, 212, 0.1);
         }
-
-        input[type="number"]:hover, select:hover {
-            border-color: #b0b8ea;
-        }
-
+        
+        /* Buton Stilleri */
         .button-container {
             display: flex;
             gap: 16px;
@@ -189,48 +137,124 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-        }
-
-        button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        button:active::before {
-            width: 300px;
-            height: 300px;
+            letter-spacing: 0.5px;
         }
 
         .btn-calculate {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%);
             color: white;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 4px 15px rgba(0, 188, 212, 0.3);
         }
 
         .btn-calculate:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 188, 212, 0.4);
         }
 
         .btn-reset {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%);
             color: white;
-            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
         }
 
         .btn-reset:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4);
         }
 
+        .progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 1s ease-out;
+            background: linear-gradient(90deg, #00bcd4 0%, #0097a7 100%);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Köşe Yazıları ve Dil Seçim Kutusu Stilleri */
+        .top-info, .lang-toggle-container {
+            position: fixed;
+            padding: 8px 15px;
+            font-size: 0.85em;
+            font-weight: 500;
+            color: #333;
+            z-index: 10;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* DİL SEÇİM KUTUSU: SOL ÜST KÖŞE (EN SOLA) */
+        .lang-toggle-container {
+            top: 20px;
+            left: 20px; /* EN SOLA ALINDI */
+            right: auto;
+            padding: 0;
+            background: none;
+            box-shadow: none;
+            width: 100px; 
+        }
+
+        #langSelect {
+            padding: 8px;
+            border: 1px solid #ccc;
+            background-color: #f0f0f0;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.2s, border-color 0.2s;
+            font-weight: 600;
+            height: 38px;
+            width: 100%;
+        }
+
+        #langSelect:hover {
+            background-color: #e0e0e0;
+            border-color: #aaa;
+        }
+
+        /* DİĞER KÖŞE YAZILARI KONUMU */
+        .top-right {
+            top: 20px;
+            right: 20px; /* Sağ üst köşeye net konumlandırıldı */
+        }
+        
+        /* Sol en alta konumlandırma (Emir Alp Esmergül Kutusu) */
+        .bottom-left {
+            bottom: 20px;
+            left: 20px;
+            top: auto; 
+        }
+
+        @media (max-width: 768px) {
+            /* Mobil için repositioning */
+            .top-right, .lang-toggle-container, .bottom-left {
+                position: static;
+                display: block;
+                width: 100%;
+                text-align: center;
+                margin-bottom: 10px;
+                right: auto;
+                top: auto;
+                left: auto;
+            }
+
+            .lang-toggle-container {
+                /* Dil seçimi kutusu üstte kalsın diye margin-top ekledim */
+                margin-bottom: 15px; 
+            }
+            
+            .bottom-left {
+                margin-top: 10px;
+            }
+
+            #langSelect {
+                width: 100%;
+            }
+        }
+
+        /* Result Box Styling (Geri kalan stiller) */
         .result-box {
             margin-top: 40px;
             padding: 30px;
@@ -242,30 +266,8 @@
         }
 
         @keyframes resultAppear {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .result-box::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            animation: shine 3s infinite;
-        }
-
-        @keyframes shine {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         .result-icon {
@@ -291,19 +293,19 @@
         }
 
         .success {
-            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            background: #d4edda;
             color: #155724;
             border: 3px solid #28a745;
         }
 
         .danger {
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            background: #f8d7da;
             color: #721c24;
             border: 3px solid #dc3545;
         }
 
         .warning {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            background: #fff3cd;
             color: #856404;
             border: 3px solid #ffc107;
         }
@@ -316,35 +318,6 @@
             margin-top: 20px;
             overflow: hidden;
         }
-
-        .progress-fill {
-            height: 100%;
-            border-radius: 10px;
-            transition: width 1s ease-out;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 24px;
-            }
-
-            h1 {
-                font-size: 1.8em;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .button-container {
-                flex-direction: column;
-            }
-        }
     </style>
 </head>
 <body>
@@ -352,203 +325,220 @@
     <div class="bg-circle"></div>
     <div class="bg-circle"></div>
 
+    <div class="lang-toggle-container">
+        <select id="langSelect">
+            <option value="tr">Türkçe</option>
+            <option value="en">English</option>
+        </select>
+    </div>
+    
+    <div class="top-info top-right" data-key="group_info">
+        Veri Bilimi ve Makine Öğrenmesi Grup 1
+    </div>
+    
+    <div class="top-info bottom-left">
+        This site Designed & Developed and Deployed by Emir Alp Esmergül
+    </div>
+
+
     <div class="container">
         <div class="header">
-            <div class="header-icon">🏦</div>
-            <h1>Kredi Riski Tahmin Aracı</h1>
-            <p class="subtitle">Gelişmiş yapay zeka algoritması ile kredi onay tahmini</p>
+            <div class="header-icon"></div> 
+            <h1 data-key="h1_title">Kredi Risk Analizi</h1>
+            <p class="subtitle" data-key="subtitle">Gelişmiş yapay zeka algoritması ile kredi onay tahmini</p>
         </div>
 
         <div id="resultSection" class="hidden"></div>
 
         <form id="creditForm">
             <div class="form-row">
+                
                 <div class="form-group">
-                    <label for="Status">💰 Mevcut Hesap Durumu:</label>
+                    <label for="Status" data-key="l_status">💰 Mevcut Hesap Durumu:</label>
                     <select name="Status" id="Status" required>
-                        <option value="">Seçiniz</option>
-                        <option value="A11">Mevcut Hesap Bakiyesi &lt; 0 TL</option>
-                        <option value="A12">Mevcut Hesap Bakiyesi 0 ≤ x &lt; 200 TL</option>
-                        <option value="A13">Mevcut Hesap Bakiyesi ≥ 200 TL / Maaş Hesabı</option>
-                        <option value="A14">Kayıtlı Mevcut Hesap Yok</option>
+                        <option value="" data-key="opt_select">Seçiniz</option>
+                        <option value="A11" data-key="A11">Mevcut Hesap Bakiyesi &lt; 0 TL</option>
+                        <option value="A12" data-key="A12">Mevcut Hesap Bakiyesi 0 ≤ x &lt; 200 TL</option>
+                        <option value="A13" data-key="A13">Mevcut Hesap Bakiyesi ≥ 200 TL / Maaş Hesabı</option>
+                        <option value="A14" data-key="A14">Kayıtlı Mevcut Hesap Yok</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="Duration">📅 Kredi Süresi (Ay):</label>
-                    <input type="number" name="Duration" id="Duration" min="4" max="72" placeholder="Örn: 24 (min 4, max 72)" required>
+                    <label for="Duration" data-key="l_duration">📅 Kredi Süresi (Ay):</label>
+                    <input type="number" name="Duration" id="Duration" min="4" max="72" data-key-placeholder="p_duration" placeholder="Örn: 24 (min 4, max 72)" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="CreditHistory">📊 Kredi Geçmişi:</label>
+                    <label for="CreditHistory" data-key="l_credit_history">📊 Kredi Geçmişi:</label>
                     <select name="CreditHistory" id="CreditHistory" required>
-                        <option value="">Seçiniz</option>
-                        <option value="A30">Önceden Kredi Yok / Hepsi Düzenli Ödendi</option>
-                        <option value="A31">Bu Bankadaki Tüm Krediler Düzenli Ödendi</option>
-                        <option value="A32">Mevcut Kredilerde Gecikme Yok</option>
-                        <option value="A33">Eski Kredilerde Gecikme Yaşanmış</option>
-                        <option value="A34">Geçmişte Ciddi Sorunlar (Çok Kritik)</option>
+                        <option value="" data-key="opt_select">Seçiniz</option>
+                        <option value="A30" data-key="A30">Önceden Kredi Yok / Hepsi Düzenli Ödendi</option>
+                        <option value="A31" data-key="A31">Bu Bankadaki Tüm Krediler Düzenli Ödendi</option>
+                        <option value="A32" data-key="A32">Mevcut Kredilerde Gecikme Yok</option>
+                        <option value="A33" data-key="A33">Eski Kredilerde Gecikme Yaşanmış</option>
+                        <option value="A34" data-key="A34">Geçmişte Ciddi Sorunlar (Çok Kritik)</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="Purpose">🎯 Kredi Amacı:</label>
+                    <label for="Purpose" data-key="l_purpose">🎯 Kredi Amacı:</label>
                     <select name="Purpose" id="Purpose" required>
-                        <option value="">Seçiniz</option>
-                        <option value="A40">Yeni araba</option>
-                        <option value="A41">Kullanılmış araba</option>
-                        <option value="A42">Mobilya/Ekipman</option>
-                        <option value="A43">Radyo/Televizyon</option>
-                        <option value="A44">Ev tadilatı</option>
-                        <option value="A45">Eğitim</option>
-                        <option value="A46">İş geliştirme</option>
-                        <option value="A49">Tatil / Diğer</option>
-                        <option value="A410">Giyim / Ayakkabı</option>
+                        <option value="" data-key="opt_select">Seçiniz</option>
+                        <option value="A40" data-key="A40">Yeni araba</option>
+                        <option value="A41" data-key="A41">Kullanılmış araba</option>
+                        <option value="A42" data-key="A42">Mobilya/Ekipman</option>
+                        <option value="A43" data-key="A43">Radyo/Televizyon</option>
+                        <option value="A44" data-key="A44">Ev tadilatı</option>
+                        <option value="A45" data-key="A45">Eğitim</option>
+                        <option value="A46" data-key="A46">İş geliştirme</option>
+                        <option value="A49" data-key="A49">Tatil / Diğer</option>
+                        <option value="A410" data-key="A410">Giyim / Ayakkabı</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="CreditAmount">💵 Kredi Miktarı (TL):</label>
-                    <input type="number" name="CreditAmount" id="CreditAmount" min="250" max="18424" placeholder="Örn: 3500 TL" required>
+                    <label for="CreditAmount" data-key="l_credit_amount">💵 Kredi Miktarı (TL):</label>
+                    <input type="number" name="CreditAmount" id="CreditAmount" min="250" max="18424" data-key-placeholder="p_credit_amount" placeholder="Örn: 3500 TL" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="Savings">💎 Tasarruf Hesabı:</label>
+                    <label for="Savings" data-key="l_savings">💎 Tasarruf Hesabı:</label>
                     <select name="Savings" id="Savings" required>
-                        <option value="">Seçiniz</option>
-                        <option value="A61">&lt; 100 TL</option>
-                        <option value="A62">100 ≤ x &lt; 500 TL</option>
-                        <option value="A63">500 ≤ x &lt; 1000 TL</option>
-                        <option value="A64">≥ 1000 TL</option>
-                        <option value="A65">Bilinmiyor / Tasarruf Yok</option>
+                        <option value="" data-key="opt_select">Seçiniz</option>
+                        <option value="A61" data-key="A61"> &lt; 100 TL</option>
+                        <option value="A62" data-key="A62">100 ≤ x &lt; 500 TL</option>
+                        <option value="A63" data-key="A63">500 ≤ x &lt; 1000 TL</option>
+                        <option value="A64" data-key="A64">≥ 1000 TL</option>
+                        <option value="A65" data-key="A65">Bilinmiyor / Tasarruf Yok</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="EmploymentSince">👔 İstihdam Durumu/Süresi:</label>
+                    <label for="EmploymentSince" data-key="l_employment">👔 İstihdam Durumu/Süresi:</label>
                     <select name="EmploymentSince" id="EmploymentSince" required>
-                        <option value="">Seçiniz</option>
-                        <option value="A71">İşsiz</option>
-                        <option value="A72">&lt; 1 yıl</option>
-                        <option value="A73">1 ≤ x &lt; 4 yıl</option>
-                        <option value="A74">4 ≤ x &lt; 7 yıl</option>
-                        <option value="A75">≥ 7 yıl</option>
+                        <option value="" data-key="opt_select">Seçiniz</option>
+                        <option value="A71" data-key="A71">İşsiz</option>
+                        <option value="A72" data-key="A72">&lt; 1 yıl</option>
+                        <option value="A73" data-key="A73">1 ≤ x &lt; 4 yıl</option>
+                        <option value="A74" data-key="A74">4 ≤ x &lt; 7 yıl</option>
+                        <option value="A75" data-key="A75">≥ 7 yıl</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="InstallmentRate">📈 Taksit Oranı (%):</label>
-                    <input type="number" name="InstallmentRate" id="InstallmentRate" min="1" max="4" placeholder="Gelirin %'si (1-4)" required>
+                    <label for="InstallmentRate" data-key="l_installment_rate">📈 Taksit Oranı (%):</label>
+                    <input type="number" name="InstallmentRate" id="InstallmentRate" min="1" max="4" data-key-placeholder="p_installment_rate" placeholder="Gelirin %'si (1-4)" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="PersonalStatusSex">👤 Kişisel Durum & Cinsiyet:</label>
+                    <label for="PersonalStatusSex" data-key="l_personal_status">👤 Kişisel Durum & Cinsiyet:</label>
                     <select name="PersonalStatusSex" id="PersonalStatusSex" required>
-                        <option value="">Seçiniz</option>
-                        <option value="A93">Erkek: Bekar</option>
-                        <option value="A94">Erkek: Evli / Dul</option>
-                        <option value="A91">Erkek: Boşanmış / Ayrılmış</option>
-                        <option value="A95">Kadın: Bekar</option>
-                        <option value="A92">Kadın: Evli / Boşanmış / Ayrılmış</option>
+                        <option value="" data-key="opt_select">Seçiniz</option>
+                        <option value="A93" data-key="A93">Erkek: Bekar</option>
+                        <option value="A94" data-key="A94">Erkek: Evli / Dul</option>
+                        <option value="A91" data-key="A91">Erkek: Boşanmış / Ayrılmış</option>
+                        <option value="A95" data-key="A95">Kadın: Bekar</option>
+                        <option value="A92" data-key="A92">Kadın: Evli / Boşanmış / Ayrılmış</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="OtherDebtors">🤝 Diğer Borçlular/Kefiller:</label>
+                    <label for="OtherDebtors" data-key="l_debtors">🤝 Diğer Borçlular/Kefiller:</label>
                     <select name="OtherDebtors" id="OtherDebtors" required>
-                        <option value="">Seçiniz</option>
-                        <option value="A101">Yok</option>
-                        <option value="A102">Ortak Borçlu</option>
-                        <option value="A103">Kefil</option>
+                        <option value="" data-key="opt_select">Seçiniz</option>
+                        <option value="A101" data-key="A101">Yok</option>
+                        <option value="A102" data-key="A102">Ortak Borçlu</option>
+                        <option value="A103" data-key="A103">Kefil</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="PresentResidenceSince">🏠 Mevcut İkamet Süresi (Yıl):</label>
-                    <input type="number" name="PresentResidenceSince" id="PresentResidenceSince" min="1" max="4" placeholder="1-4 yıl" required>
+                    <label for="PresentResidenceSince" data-key="l_residence">🏠 Mevcut İkamet Süresi (Yıl):</label>
+                    <input type="number" name="PresentResidenceSince" id="PresentResidenceSince" min="1" max="4" data-key-placeholder="p_residence" placeholder="1-4 yıl" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="Property">🏡 Mülkiyet Tipi:</label>
+                    <label for="Property" data-key="l_property">🏡 Mülkiyet Tipi:</label>
                     <select name="Property" id="Property" required>
-                        <option value="">Seçiniz</option>
-                        <option value="A121">Gayrimenkul (Ev/Arsa)</option>
-                        <option value="A122">Hayat Sigortası / İnşaat Tasarrufları</option>
-                        <option value="A123">Araba veya Diğer Kullanılan Mülkler</option>
-                        <option value="A124">Bilinmiyor / Mülk Yok</option>
+                        <option value="" data-key="opt_select">Seçiniz</option>
+                        <option value="A121" data-key="A121">Gayrimenkul (Ev/Arsa)</option>
+                        <option value="A122" data-key="A122">Hayat Sigortası / İnşaat Tasarrufları</option>
+                        <option value="A123" data-key="A123">Araba veya Diğer Kullanılan Mülkler</option>
+                        <option value="A124" data-key="A124">Bilinmiyor / Mülk Yok</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="Age">🎂 Yaş:</label>
-                    <input type="number" name="Age" id="Age" min="19" max="75" placeholder="Örn: 35 (19-75)" required>
+                    <label for="Age" data-key="l_age">🎂 Yaş:</label>
+                    <input type="number" name="Age" id="Age" min="19" max="75" data-key-placeholder="p_age" placeholder="Örn: 35 (19-75)" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="OtherInstallmentPlans">💳 Diğer Taksit Planları:</label>
+                    <label for="OtherInstallmentPlans" data-key="l_other_plans">💳 Diğer Taksit Planları:</label>
                     <select name="OtherInstallmentPlans" id="OtherInstallmentPlans" required>
-                        <option value="">Seçiniz</option>
-                        <option value="A141">Banka</option>
-                        <option value="A142">Mağazalar/Kurumlar</option>
-                        <option value="A143">Yok</option>
+                        <option value="" data-key="opt_select">Seçiniz</option>
+                        <option value="A141" data-key="A141">Banka</option>
+                        <option value="A142" data-key="A142">Mağazalar/Kurumlar</option>
+                        <option value="A143" data-key="A143">Yok</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="Housing">🏘️ Konut Durumu:</label>
+                    <label for="Housing" data-key="l_housing">🏘️ Konut Durumu:</label>
                     <select name="Housing" id="Housing" required>
-                        <option value="">Seçiniz</option>
-                        <option value="A151">Kira</option>
-                        <option value="A152">Kendi Evi</option>
-                        <option value="A153">Kiracılığı bedelsiz / Diğer</option>
+                        <option value="" data-key="opt_select">Seçiniz</option>
+                        <option value="A151" data-key="A151">Kira</option>
+                        <option value="A152" data-key="A152">Kendi Evi</option>
+                        <option value="A153" data-key="A153">Kiracılığı bedelsiz / Diğer</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="NumberExistingCredits">🔢 Mevcut Kredi Sayısı:</label>
-                    <input type="number" name="NumberExistingCredits" id="NumberExistingCredits" min="1" max="4" placeholder="1-4 kredi" required>
+                    <label for="NumberExistingCredits" data-key="l_existing_credits">🔢 Mevcut Kredi Sayısı:</label>
+                    <input type="number" name="NumberExistingCredits" id="NumberExistingCredits" min="1" max="4" data-key-placeholder="p_existing_credits" placeholder="1-4 kredi" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="Job">💼 Meslek:</label>
+                    <label for="Job" data-key="l_job">💼 Meslek:</label>
                     <select name="Job" id="Job" required>
-                        <option value="">Seçiniz</option>
-                        <option value="A171">İşsiz / Kayıtsız Çalışan</option>
-                        <option value="A172">Niteliksiz / Yerleşik Çalışan</option>
-                        <option value="A173">Nitelikli Çalışan / Memur</option>
-                        <option value="A174">Yönetici / Serbest Meslek Sahibi</option>
+                        <option value="" data-key="opt_select">Seçiniz</option>
+                        <option value="A171" data-key="A171">İşsiz / Kayıtsız Çalışan</option>
+                        <option value="A172" data-key="A172">Niteliksiz / Yerleşik Çalışan</option>
+                        <option value="A173" data-key="A173">Nitelikli Çalışan / Memur</option>
+                        <option value="A174" data-key="A174">Yönetici / Serbest Meslek Sahibi</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="NumberPeopleMaintenance">👨‍👩‍👧 Bakmakla Yükümlü Kişi Sayısı:</label>
-                    <input type="number" name="NumberPeopleMaintenance" id="NumberPeopleMaintenance" min="1" max="2" placeholder="1 veya 2" required>
+                    <label for="NumberPeopleMaintenance" data-key="l_maintenance">👨‍👩‍👧 Bakmakla Yükümlü Kişi Sayısı:</label>
+                    <input type="number" name="NumberPeopleMaintenance" id="NumberPeopleMaintenance" min="1" max="2" data-key-placeholder="p_maintenance" placeholder="1 veya 2" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="Telephone">📞 Telefon (Tescilli):</label>
+                    <label for="Telephone" data-key="l_telephone">📞 Telefon (Tescilli):</label>
                     <select name="Telephone" id="Telephone" required>
-                        <option value="">Seçiniz</option>
-                        <option value="A191">Yok</option>
-                        <option value="A192">Var (Sabit hat/Kayıtlı GSM)</option>
+                        <option value="" data-key="opt_select">Seçiniz</option>
+                        <option value="A191" data-key="A191">Yok</option>
+                        <option value="A192" data-key="A192">Var (Sabit hat/Kayıtlı GSM)</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="ForeignWorker">🌍 Yabancı İşçi:</label>
+                    <label for="ForeignWorker" data-key="l_foreign_worker">🌍 Yabancı İşçi:</label>
                     <select name="ForeignWorker" id="ForeignWorker" required>
-                        <option value="">Seçiniz</option>
-                        <option value="A201">Hayır</option>
-                        <option value="A202">Evet</option>
+                        <option value="" data-key="opt_select">Seçiniz</option>
+                        <option value="A201" data-key="A201">Hayır</option>
+                        <option value="A202" data-key="A202">Evet</option>
                     </select>
                 </div>
             </div>
 
             <div class="button-container">
-                <button type="submit" class="btn-calculate">
+                <button type="submit" class="btn-calculate" data-key="btn_calculate">
                     🔍 Kredi Riskini Hesapla
                 </button>
-                <button type="button" class="btn-reset" onclick="resetForm()">
+                <button type="button" class="btn-reset" onclick="resetForm()" data-key="btn_reset">
                     🔄 Formu Sıfırla
                 </button>
             </div>
@@ -556,11 +546,283 @@
     </div>
 
     <script>
+        const translations = {
+            'tr': {
+                'title': 'Kredi Risk Analizi',
+                'h1_title': 'Kredi Risk Analizi',
+                'subtitle': 'Gelişmiş yapay zeka algoritması ile kredi onay tahmini',
+                'group_info': 'Veri Bilimi ve Makine Öğrenmesi Grup 1',
+                // 'dev_info': 'Bu site Emir Alp Esmergül tarafından tasarlandı, geliştirildi ve yayına alındı.', // KALDIRILDI
+                'btn_calculate': '🔍 Kredi Riskini Hesapla',
+                'btn_reset': '🔄 Formu Sıfırla',
+                
+                // Labels
+                'l_status': '💰 Mevcut Hesap Durumu:',
+                'l_duration': '📅 Kredi Süresi (Ay):',
+                'l_credit_history': '📊 Kredi Geçmişi:',
+                'l_purpose': '🎯 Kredi Amacı:',
+                'l_credit_amount': '💵 Kredi Miktarı (TL):',
+                'l_savings': '💎 Tasarruf Hesabı:',
+                'l_employment': '👔 İstihdam Durumu/Süresi:',
+                'l_installment_rate': '📈 Taksit Oranı (%):',
+                'l_personal_status': '👤 Kişisel Durum & Cinsiyet:',
+                'l_debtors': '🤝 Diğer Borçlular/Kefiller:',
+                'l_residence': '🏠 Mevcut İkamet Süresi (Yıl):',
+                'l_property': '🏡 Mülkiyet Tipi:',
+                'l_age': '🎂 Yaş:',
+                'l_other_plans': '💳 Diğer Taksit Planları:',
+                'l_housing': '🏘️ Konut Durumu:',
+                'l_existing_credits': '🔢 Mevcut Kredi Sayısı:',
+                'l_job': '💼 Meslek:',
+                'l_maintenance': '👨‍👩‍👧 Bakmakla Yükümlü Kişi Sayısı:',
+                'l_telephone': '📞 Telefon (Tescilli):',
+                'l_foreign_worker': '🌍 Yabancı İşçi:',
+
+                // Placeholders
+                'p_duration': 'Örn: 24 (min 4, max 72)',
+                'p_credit_amount': 'Örn: 3500 TL',
+                'p_installment_rate': 'Gelirin %\'si (1-4)',
+                'p_residence': '1-4 yıl',
+                'p_age': 'Örn: 35 (19-75)',
+                'p_existing_credits': '1-4 kredi',
+                'p_maintenance': '1 veya 2',
+
+                // Select Options
+                'opt_select': 'Seçiniz',
+                'A11': 'Mevcut Hesap Bakiyesi < 0 TL',
+                'A12': 'Mevcut Hesap Bakiyesi 0 ≤ x < 200 TL',
+                'A13': 'Mevcut Hesap Bakiyesi ≥ 200 TL / Maaş Hesabı',
+                'A14': 'Kayıtlı Mevcut Hesap Yok',
+                'A30': 'Önceden Kredi Yok / Hepsi Düzenli Ödendi',
+                'A31': 'Bu Bankadaki Tüm Krediler Düzenli Ödendi',
+                'A32': 'Mevcut Kredilerde Gecikme Yok',
+                'A33': 'Eski Kredilerde Gecikme Yaşanmış',
+                'A34': 'Geçmişte Ciddi Sorunlar (Çok Kritik)',
+                'A40': 'Yeni araba',
+                'A41': 'Kullanılmış araba',
+                'A42': 'Mobilya/Ekipman',
+                'A43': 'Radyo/Televizyon',
+                'A44': 'Ev tadilatı',
+                'A45': 'Eğitim',
+                'A46': 'İş geliştirme',
+                'A49': 'Tatil / Diğer',
+                'A410': 'Giyim / Ayakkabı',
+                'A61': '< 100 TL',
+                'A62': '100 ≤ x < 500 TL',
+                'A63': '500 ≤ x < 1000 TL',
+                'A64': '≥ 1000 TL',
+                'A65': 'Bilinmiyor / Tasarruf Yok',
+                'A71': 'İşsiz',
+                'A72': '< 1 yıl',
+                'A73': '1 ≤ x < 4 yıl',
+                'A74': '4 ≤ x < 7 yıl',
+                'A75': '≥ 7 yıl',
+                'A93': 'Erkek: Bekar',
+                'A94': 'Erkek: Evli / Dul',
+                'A91': 'Erkek: Boşanmış / Ayrılmış',
+                'A95': 'Kadın: Bekar',
+                'A92': 'Kadın: Evli / Boşanmış / Ayrılmış',
+                'A101': 'Yok',
+                'A102': 'Ortak Borçlu',
+                'A103': 'Kefil',
+                'A121': 'Gayrimenkul (Ev/Arsa)',
+                'A122': 'Hayat Sigortası / İnşaat Tasarrufları',
+                'A123': 'Araba veya Diğer Kullanılan Mülkler',
+                'A124': 'Bilinmiyor / Mülk Yok',
+                'A141': 'Banka',
+                'A142': 'Mağazalar/Kurumlar',
+                'A143': 'Yok',
+                'A151': 'Kira',
+                'A152': 'Kendi Evi',
+                'A153': 'Kiracılığı bedelsiz / Diğer',
+                'A171': 'İşsiz / Kayıtsız Çalışan',
+                'A172': 'Niteliksiz / Yerleşik Çalışan',
+                'A173': 'Nitelikli Çalışan / Memur',
+                'A174': 'Yönetici / Serbest Meslek Sahibi',
+                'A191': 'Yok',
+                'A192': 'Var (Sabit hat/Kayıtlı GSM)',
+                'A201': 'Hayır',
+                'A202': 'Evet',
+
+                // Result Box (Mocked)
+                'res_approved': '✅ Kredi Onaylandı',
+                'res_warning': '⚠️ Koşullu Onay',
+                'res_rejected': '❌ Kredi Reddedildi',
+                'res_probability': 'Onaylanma Olasılığı:',
+            },
+            'en': {
+                'title': 'Credit Risk Prediction Tool',
+                'h1_title': 'Credit Risk Prediction Tool',
+                'subtitle': 'Credit approval prediction using an advanced AI algorithm',
+                'group_info': 'Data Science and Machine Learning Group 1',
+                // 'dev_info': 'This site Designed & Developed and Deployed by Emir Alp Esmergül', // KALDIRILDI
+                'btn_calculate': '🔍 Calculate Credit Risk',
+                'btn_reset': '🔄 Reset Form',
+
+                // Labels
+                'l_status': '💰 Current Account Status:',
+                'l_duration': '📅 Credit Duration (Months):',
+                'l_credit_history': '📊 Credit History:',
+                'l_purpose': '🎯 Credit Purpose:',
+                'l_credit_amount': '💵 Credit Amount (TL):',
+                'l_savings': '💎 Savings Account:',
+                'l_employment': '👔 Employment Status/Duration:',
+                'l_installment_rate': '📈 Installment Rate (%):',
+                'l_personal_status': '👤 Personal Status & Sex:',
+                'l_debtors': '🤝 Other Debtors/Guarantors:',
+                'l_residence': '🏠 Present Residence Since (Years):',
+                'l_property': '🏡 Mülkiyet Tipi:',
+                'l_age': '🎂 Age:',
+                'l_other_plans': '💳 Other Installment Plans:',
+                'l_housing': '🏘️ Housing Status:',
+                'l_existing_credits': '🔢 Number of Existing Credits:',
+                'l_job': '💼 Job:',
+                'l_maintenance': '👨‍👩‍👧 Number of People to be Maintained:',
+                'l_telephone': '📞 Telephone (Registered):',
+                'l_foreign_worker': '🌍 Foreign Worker:',
+
+                // Placeholders
+                'p_duration': 'Ex: 24 (min 4, max 72)',
+                'p_credit_amount': 'Ex: 3500 TL',
+                'p_installment_rate': '% of Income (1-4)',
+                'p_residence': '1-4 years',
+                'p_age': 'Ex: 35 (19-75)',
+                'p_existing_credits': '1-4 credits',
+                'p_maintenance': '1 or 2',
+
+                // Select Options
+                'opt_select': 'Select',
+                'A11': 'Current Account Balance < 0 TL',
+                'A12': 'Current Account Balance 0 ≤ x < 200 TL',
+                'A13': 'Current Account Balance ≥ 200 TL / Salary Account',
+                'A14': 'No Registered Current Account',
+                'A30': 'No Prior Credit / All Paid Regularly',
+                'A31': 'All Credits at this Bank Paid Regularly',
+                'A32': 'No Delay in Existing Credits',
+                'A33': 'Delay Experienced in Past Credits',
+                'A34': 'Serious Past Problems (Very Critical)',
+                'A40': 'New car',
+                'A41': 'Used car',
+                'A42': 'Furniture/Equipment',
+                'A43': 'Radio/Television',
+                'A44': 'Home improvement',
+                'A45': 'Education',
+                'A46': 'Business development',
+                'A49': 'Vacation / Other',
+                'A410': 'Clothing / Footwear',
+                'A61': '< 100 TL',
+                'A62': '100 ≤ x < 500 TL',
+                'A63': '500 ≤ x < 1000 TL',
+                'A64': '≥ 1000 TL',
+                'A65': 'Unknown / No Savings',
+                'A71': 'Unemployed',
+                'A72': '< 1 year',
+                'A73': '1 ≤ x < 4 years',
+                'A74': '4 ≤ x < 7 years',
+                'A75': '≥ 7 years',
+                'A93': 'Male: Single',
+                'A94': 'Male: Married / Widowed',
+                'A91': 'Male: Divorced / Separated',
+                'A95': 'Female: Single',
+                'A92': 'Female: Married / Divorced / Separated',
+                'A101': 'None',
+                'A102': 'Co-debtor',
+                'A103': 'Guarantor',
+                'A121': 'Real Estate (House/Land)',
+                'A122': 'Life Insurance / Building Society Savings',
+                'A123': 'Car or Other Used Property',
+                'A124': 'Unknown / No Property',
+                'A141': 'Bank',
+                'A142': 'Stores/Institutions',
+                'A143': 'None',
+                'A151': 'Rent',
+                'A152': 'Own Home',
+                'A153': 'Free Tenancy / Other',
+                'A171': 'Unemployed / Unskilled - Non-resident',
+                'A172': 'Unskilled - Resident Employee',
+                'A173': 'Skilled Employee / Civil Servant',
+                'A174': 'Management / Self-employed',
+                'A191': 'None',
+                'A192': 'Yes (Landline/Registered GSM)',
+                'A201': 'No',
+                'A202': 'Yes',
+
+                // Result Box (Mocked)
+                'res_approved': '✅ Credit Approved',
+                'res_warning': '⚠️ Conditional Approval',
+                'res_rejected': '❌ Credit Rejected',
+                'res_probability': 'Approval Probability:',
+            }
+        };
+
+        let currentLang = 'tr';
+        const langSelect = document.getElementById('langSelect');
+        langSelect.value = currentLang; // Select kutusunun başlangıç değerini ayarla
+
+        function updateContent(lang) {
+            // data-key'e sahip elementler için metin içeriğini güncelle
+            document.querySelectorAll('[data-key]').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+
+            // Input/select option'larındaki metinleri güncelle
+            document.querySelectorAll('select option').forEach(option => {
+                const key = option.getAttribute('data-key');
+                if (key && translations[lang][key]) {
+                    option.textContent = translations[lang][key];
+                }
+            });
+
+            // Placeholder içeriğini güncelle
+            document.querySelectorAll('[data-key-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-key-placeholder');
+                if (translations[lang][key]) {
+                    element.setAttribute('placeholder', translations[lang][key]);
+                }
+            });
+
+            document.documentElement.setAttribute('lang', lang);
+            document.title = translations[lang]['title'];
+
+            // Sonuç bölümü görünür durumdaysa, içeriğini güncelle
+            const resultSection = document.getElementById('resultSection');
+            if (!resultSection.classList.contains('hidden')) {
+                const resultTitle = resultSection.querySelector('.result-title');
+                const resultProbContainer = resultSection.querySelector('.result-probability');
+                
+                if (resultTitle && resultProbContainer) {
+                    // Mevcut durumu belirle
+                    let statusKey = 'res_warning';
+                    if (resultTitle.classList.contains('success')) {
+                        statusKey = 'res_approved';
+                    } else if (resultTitle.classList.contains('danger')) {
+                        statusKey = 'res_rejected';
+                    }
+                    
+                    // Olasılık değerini (örn. "%85") koru
+                    const strongElement = resultProbContainer.querySelector('strong');
+                    const probabilityValue = strongElement ? strongElement.textContent : '';
+
+                    // Başlık ve olasılık etiketini güncelle
+                    resultTitle.textContent = translations[lang][statusKey];
+                    resultProbContainer.innerHTML = `${translations[lang]['res_probability']} <strong>${probabilityValue}</strong>`;
+                }
+            }
+        }
+
+        langSelect.addEventListener('change', function() {
+            currentLang = this.value; // Seçilen değeri al ('tr' veya 'en')
+            updateContent(currentLang);
+        });
+        
+        // Başlangıçta Türkçe ayarla
+        updateContent(currentLang);
+
         document.getElementById('creditForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            // Form verilerini al
-            const formData = new FormData(this);
             
             // Simüle edilmiş sonuç (gerçek uygulamada backend'e gönderilecek)
             const mockResult = generateMockResult();
@@ -571,40 +833,44 @@
         function generateMockResult() {
             // Rastgele bir tahmin sonucu üret
             const random = Math.random();
-            
+            let risk_key, icon;
+            let probabilityValue;
+
             if (random > 0.7) {
-                return {
-                    risk_level: 'success',
-                    status: '✅ Kredi Onaylandı',
-                    probability: '%' + (75 + Math.floor(Math.random() * 20)),
-                    icon: '🎉'
-                };
+                risk_key = 'res_approved';
+                icon = '🎉';
+                probabilityValue = 75 + Math.floor(Math.random() * 20);
             } else if (random > 0.4) {
-                return {
-                    risk_level: 'warning',
-                    status: '⚠️ Koşullu Onay',
-                    probability: '%' + (50 + Math.floor(Math.random() * 25)),
-                    icon: '⚖️'
-                };
+                risk_key = 'res_warning';
+                icon = '⚖️';
+                probabilityValue = 50 + Math.floor(Math.random() * 25);
             } else {
-                return {
-                    risk_level: 'danger',
-                    status: '❌ Kredi Reddedildi',
-                    probability: '%' + (10 + Math.floor(Math.random() * 40)),
-                    icon: '🚫'
-                };
+                risk_key = 'res_rejected';
+                icon = '🚫';
+                probabilityValue = 10 + Math.floor(Math.random() * 40);
             }
+
+            return {
+                risk_level: risk_key.replace('res_', ''), // 'approved', 'warning', 'rejected'
+                status: translations[currentLang][risk_key],
+                probability: '%' + probabilityValue,
+                icon: icon
+            };
         }
 
         function displayResult(result) {
             const resultSection = document.getElementById('resultSection');
             const probabilityNum = parseInt(result.probability.replace('%', ''));
             
+            // Mevcut dilin onay olasılığı etiketini al
+            const probabilityLabel = translations[currentLang]['res_probability'];
+            const riskLevelClass = result.risk_level;
+            
             resultSection.innerHTML = `
-                <div class="result-box ${result.risk_level}">
+                <div class="result-box ${riskLevelClass}">
                     <div class="result-icon">${result.icon}</div>
-                    <div class="result-title">${result.status}</div>
-                    <div class="result-probability">Onaylanma Olasılığı: <strong>${result.probability}</strong></div>
+                    <div class="result-title ${riskLevelClass}">${result.status}</div>
+                    <div class="result-probability">${probabilityLabel} <strong>${result.probability}</strong></div>
                     <div class="progress-bar">
                         <div class="progress-fill" style="width: ${probabilityNum}%"></div>
                     </div>
