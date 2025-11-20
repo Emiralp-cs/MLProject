@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-key="title">Kredi Riski Tahmin Aracı</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <style>
         /* Genel Stil Ayarları */
         * {
@@ -15,6 +14,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Sade mavi/açık gri tonları */
             background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
             min-height: 100vh;
             padding: 20px;
@@ -26,7 +26,7 @@
         .bg-circle {
             position: fixed;
             border-radius: 50%;
-            background: rgba(0, 188, 212, 0.1); 
+            background: rgba(0, 188, 212, 0.1); /* Açık cam göbeği tonu */
             animation: float 20s infinite ease-in-out;
             z-index: 0;
         }
@@ -64,8 +64,14 @@
             position: relative;
         }
 
+        .header-icon {
+            /* Beyin emojisi kaldırıldı */
+            height: 0; 
+        }
+
         h1 {
             font-size: 2.5em;
+            /* Kurumsal mavi gradient */
             background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -79,7 +85,6 @@
             font-size: 1.1em;
         }
 
-        /* AKILLI GRID: Ekran küçülünce kolon sayısı azalır */
         .form-row {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -93,6 +98,7 @@
             font-weight: 600;
             color: #333;
             font-size: 0.95em;
+            transition: color 0.3s;
         }
 
         input[type="number"], select {
@@ -113,7 +119,7 @@
             box-shadow: 0 0 0 4px rgba(0, 188, 212, 0.1);
         }
         
-        /* Butonlar mobilde alt alta geçmesi için flex */
+        /* Buton Stilleri */
         .button-container {
             display: flex;
             gap: 16px;
@@ -137,14 +143,37 @@
         .btn-calculate {
             background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%);
             color: white;
+            box-shadow: 0 4px 15px rgba(0, 188, 212, 0.3);
+        }
+
+        .btn-calculate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 188, 212, 0.4);
         }
 
         .btn-reset {
             background: linear-gradient(135deg, #ff9800 0%, #ff5722 100%);
             color: white;
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
         }
-        
-        /* Köşe Yazıları ve Dil Seçim Kutusu Stilleri (Masaüstü) */
+
+        .btn-reset:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4);
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 1s ease-out;
+            background: linear-gradient(90deg, #00bcd4 0%, #0097a7 100%);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Köşe Yazıları ve Dil Seçim Kutusu Stilleri */
         .top-info, .lang-toggle-container {
             position: fixed;
             padding: 8px 15px;
@@ -157,9 +186,10 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         
+        /* DİL SEÇİM KUTUSU: SOL ÜST KÖŞE (EN SOLA) */
         .lang-toggle-container {
             top: 20px;
-            left: 20px;
+            left: 20px; /* EN SOLA ALINDI */
             right: auto;
             padding: 0;
             background: none;
@@ -167,49 +197,40 @@
             width: 100px; 
         }
 
+        #langSelect {
+            padding: 8px;
+            border: 1px solid #ccc;
+            background-color: #f0f0f0;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.2s, border-color 0.2s;
+            font-weight: 600;
+            height: 38px;
+            width: 100%;
+        }
+
+        #langSelect:hover {
+            background-color: #e0e0e0;
+            border-color: #aaa;
+        }
+
+        /* DİĞER KÖŞE YAZILARI KONUMU */
         .top-right {
             top: 20px;
-            right: 20px;
+            right: 20px; /* Sağ üst köşeye net konumlandırıldı */
         }
         
+        /* Sol en alta konumlandırma (Emir Alp Esmergül Kutusu) */
         .bottom-left {
             bottom: 20px;
             left: 20px;
             top: auto; 
         }
-        
-        /* SweetAlert2 için özel stil, isteğe bağlı */
-        .swal2-title {
-            font-weight: 700 !important;
-            font-size: 1.8em !important;
-            margin-top: 10px !important;
-        }
-        .swal2-html-container {
-            font-size: 1.1em !important;
-        }
 
-        /* ------------------------------------------------------------------ */
-        /* MOBİL UYUMLULUK (768px ve altı) */
-        /* ------------------------------------------------------------------ */
         @media (max-width: 768px) {
-            
-            .container {
-                padding: 20px;
-            }
-            
-            /* BUTONLAR ALT ALTA DİZİLİR */
-            .button-container {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            button {
-                width: 100%;
-            }
-            
-            /* KÖŞE BİLGİLERİ AKIŞA DAHİL EDİLİR ve SIRA KORUNUR */
+            /* Mobil için repositioning: Tüm köşe bilgileri akışa dahil edilir */
             .top-right, .lang-toggle-container, .bottom-left {
-                position: static; /* Sabit konumdan akışa geçer */
+                position: static;
                 display: block;
                 width: 100%;
                 text-align: center;
@@ -218,20 +239,92 @@
                 top: auto;
                 left: auto;
             }
-            
-            /* Dil seçimi kutusu üstte kalır ve ayrılır */
+
             .lang-toggle-container {
+                /* Dil seçimi kutusu üstte kalır */
                 margin-bottom: 15px; 
             }
             
-            /* İSTENEN DEĞİŞİKLİK: bottom-left (Designed & Developed) HTML sırasına göre en sonda yer alır ve sadece üstten boşluk eklenir. */
+            /* bottom-left (Designed & Developed) HTML sırasına göre en sonda yer alır. */
             .bottom-left {
-                margin-top: 10px; 
+                margin-top: 10px; /* Üstteki öğelerden ayırmak için bir boşluk */
             }
 
             #langSelect {
                 width: 100%;
             }
+        }
+
+        /* Result Box Styling (Geri kalan stiller) */
+        .result-box {
+            margin-top: 40px;
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            animation: resultAppear 0.5s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes resultAppear {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .result-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        .result-title {
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .result-probability {
+            font-size: 1.3em;
+            margin-top: 10px;
+        }
+
+        /* DÜZELTME: Result-box ve result-title renkleri */
+        .result-box.success {
+            background: #d4edda;
+            border: 3px solid #28a745;
+        }
+        .result-box.danger {
+            background: #f8d7da;
+            border: 3px solid #dc3545;
+        }
+        .result-box.warning {
+            background: #fff3cd;
+            border: 3px solid #ffc107;
+        }
+        
+        .result-title.success {
+            color: #155724; /* Başarılı yeşil metin */
+        }
+        .result-title.danger {
+            color: #721c24; /* Tehlikeli kırmızı metin */
+        }
+        .result-title.warning {
+            color: #856404; /* Uyarı sarı metin */
+        }
+
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            margin-top: 20px;
+            overflow: hidden;
         }
     </style>
 </head>
@@ -251,7 +344,7 @@
         Veri Bilimi ve Makine Öğrenmesi Grup 1
     </div>
     
-    <div class="top-info bottom-left">
+    <div class="top-info bottom-left" data-key="dev_info"> 
         This site Designed & Developed and Deployed by Group 1
     </div>
 
@@ -262,6 +355,8 @@
             <h1 data-key="h1_title">Kredi Risk Analizi</h1>
             <p class="subtitle" data-key="subtitle">Gelişmiş yapay zeka algoritması ile kredi onay tahmini</p>
         </div>
+
+        <div id="resultSection" class="hidden"></div>
 
         <form id="creditForm">
             <div class="form-row">
@@ -458,8 +553,6 @@
         </form>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
     <script>
         const translations = {
             'tr': {
@@ -467,10 +560,11 @@
                 'h1_title': 'Kredi Risk Analizi',
                 'subtitle': 'Gelişmiş yapay zeka algoritması ile kredi onay tahmini',
                 'group_info': 'Veri Bilimi ve Makine Öğrenmesi Grup 1',
+                'dev_info': 'Bu site Grup 1 tarafından tasarlandı, geliştirildi ve yayına alındı.', // DÜZELTME: Yeni çeviri metni
                 'btn_calculate': '🔍 Kredi Riskini Hesapla',
                 'btn_reset': '🔄 Formu Sıfırla',
                 
-                // Labels & Placeholders & Options (Kısaltıldı)
+                // Labels
                 'l_status': '💰 Mevcut Hesap Durumu:',
                 'l_duration': '📅 Kredi Süresi (Ay):',
                 'l_credit_history': '📊 Kredi Geçmişi:',
@@ -492,6 +586,7 @@
                 'l_telephone': '📞 Telefon (Tescilli):',
                 'l_foreign_worker': '🌍 Yabancı İşçi:',
 
+                // Placeholders
                 'p_duration': 'Örn: 24 (min 4, max 72)',
                 'p_credit_amount': 'Örn: 3500 TL',
                 'p_installment_rate': 'Gelirin %\'si (1-4)',
@@ -499,26 +594,80 @@
                 'p_age': 'Örn: 35 (19-75)',
                 'p_existing_credits': '1-4 kredi',
                 'p_maintenance': '1 veya 2',
+
+                // Select Options
                 'opt_select': 'Seçiniz',
-                
-                // Result Box (SweetAlert İçin)
-                'res_approved': 'Kredi Onaylandı',
-                'res_warning': 'Koşullu Onay',
-                'res_rejected': 'Kredi Reddedildi',
+                'A11': 'Mevcut Hesap Bakiyesi < 0 TL',
+                'A12': 'Mevcut Hesap Bakiyesi 0 ≤ x < 200 TL',
+                'A13': 'Mevcut Hesap Bakiyesi ≥ 200 TL / Maaş Hesabı',
+                'A14': 'Kayıtlı Mevcut Hesap Yok',
+                'A30': 'Önceden Kredi Yok / Hepsi Düzenli Ödendi',
+                'A31': 'Bu Bankadaki Tüm Krediler Düzenli Ödendi',
+                'A32': 'Mevcut Kredilerde Gecikme Yok',
+                'A33': 'Eski Kredilerde Gecikme Yaşanmış',
+                'A34': 'Geçmişte Ciddi Sorunlar (Çok Kritik)',
+                'A40': 'Yeni araba',
+                'A41': 'Kullanılmış araba',
+                'A42': 'Mobilya/Ekipman',
+                'A43': 'Radyo/Televizyon',
+                'A44': 'Ev tadilatı',
+                'A45': 'Eğitim',
+                'A46': 'İş geliştirme',
+                'A49': 'Tatil / Diğer',
+                'A410': 'Giyim / Ayakkabı',
+                'A61': '< 100 TL',
+                'A62': '100 ≤ x < 500 TL',
+                'A63': '500 ≤ x < 1000 TL',
+                'A64': '≥ 1000 TL',
+                'A65': 'Bilinmiyor / Tasarruf Yok',
+                'A71': 'İşsiz',
+                'A72': '< 1 yıl',
+                'A73': '1 ≤ x < 4 yıl',
+                'A74': '4 ≤ x < 7 yıl',
+                'A75': '≥ 7 yıl',
+                'A93': 'Erkek: Bekar',
+                'A94': 'Erkek: Evli / Dul',
+                'A91': 'Erkek: Boşanmış / Ayrılmış',
+                'A95': 'Kadın: Bekar',
+                'A92': 'Kadın: Evli / Boşanmış / Ayrılmış',
+                'A101': 'Yok',
+                'A102': 'Ortak Borçlu',
+                'A103': 'Kefil',
+                'A121': 'Gayrimenkul (Ev/Arsa)',
+                'A122': 'Hayat Sigortası / İnşaat Tasarrufları',
+                'A123': 'Araba veya Diğer Kullanılan Mülkler',
+                'A124': 'Bilinmiyor / Mülk Yok',
+                'A141': 'Banka',
+                'A142': 'Mağazalar/Kurumlar',
+                'A143': 'Yok',
+                'A151': 'Kira',
+                'A152': 'Kendi Evi',
+                'A153': 'Kiracılığı bedelsiz / Diğer',
+                'A171': 'İşsiz / Kayıtsız Çalışan',
+                'A172': 'Niteliksiz / Yerleşik Çalışan',
+                'A173': 'Nitelikli Çalışan / Memur',
+                'A174': 'Yönetici / Serbest Meslek Sahibi',
+                'A191': 'Yok',
+                'A192': 'Var (Sabit hat/Kayıtlı GSM)',
+                'A201': 'Hayır',
+                'A202': 'Evet',
+
+                // Result Box (Mocked)
+                'res_approved': '✅ Kredi Onaylandı',
+                'res_warning': '⚠️ Koşullu Onay',
+                'res_rejected': '❌ Kredi Reddedildi',
                 'res_probability': 'Onaylanma Olasılığı:',
-                
-                // Option verileri (Diğer tüm Axxx kodlarını buraya ekleyin)
-                'A11': 'Mevcut Hesap Bakiyesi < 0 TL', 'A12': 'Mevcut Hesap Bakiyesi 0 ≤ x < 200 TL', 'A13': 'Mevcut Hesap Bakiyesi ≥ 200 TL / Maaş Hesabı', 'A14': 'Kayıtlı Mevcut Hesap Yok', 'A30': 'Önceden Kredi Yok / Hepsi Düzenli Ödendi', 'A31': 'Bu Bankadaki Tüm Krediler Düzenli Ödendi', 'A32': 'Mevcut Kredilerde Gecikme Yok', 'A33': 'Eski Kredilerde Gecikme Yaşanmış', 'A34': 'Geçmişte Ciddi Sorunlar (Çok Kritik)', 'A40': 'Yeni araba', 'A41': 'Kullanılmış araba', 'A42': 'Mobilya/Ekipman', 'A43': 'Radyo/Televizyon', 'A44': 'Ev tadilatı', 'A45': 'Eğitim', 'A46': 'İş geliştirme', 'A49': 'Tatil / Diğer', 'A410': 'Giyim / Ayakkabı', 'A61': '< 100 TL', 'A62': '100 ≤ x < 500 TL', 'A63': '500 ≤ x < 1000 TL', 'A64': '≥ 1000 TL', 'A65': 'Bilinmiyor / Tasarruf Yok', 'A71': 'İşsiz', 'A72': '< 1 yıl', 'A73': '1 ≤ x < 4 yıl', 'A74': '4 ≤ x < 7 yıl', 'A75': '≥ 7 yıl', 'A93': 'Erkek: Bekar', 'A94': 'Erkek: Evli / Dul', 'A91': 'Erkek: Boşanmış / Ayrılmış', 'A95': 'Kadın: Bekar', 'A92': 'Kadın: Evli / Boşanmış / Ayrılmış', 'A101': 'Yok', 'A102': 'Ortak Borçlu', 'A103': 'Kefil', 'A121': 'Gayrimenkul (Ev/Arsa)', 'A122': 'Hayat Sigortası / İnşaat Tasarrufları', 'A123': 'Araba veya Diğer Kullanılan Mülkler', 'A124': 'Bilinmiyor / Mülk Yok', 'A141': 'Banka', 'A142': 'Mağazalar/Kurumlar', 'A143': 'Yok', 'A151': 'Kira', 'A152': 'Kendi Evi', 'A153': 'Kiracılığı bedelsiz / Diğer', 'A171': 'İşsiz / Kayıtsız Çalışan', 'A172': 'Niteliksiz / Yerleşik Çalışan', 'A173': 'Nitelikli Çalışan / Memur', 'A174': 'Yönetici / Serbest Meslek Sahibi', 'A191': 'Yok', 'A192': 'Var (Sabit hat/Kayıtlı GSM)', 'A201': 'Hayır', 'A202': 'Evet',
             },
             'en': {
                 'title': 'Credit Risk Prediction Tool',
                 'h1_title': 'Credit Risk Prediction Tool',
                 'subtitle': 'Credit approval prediction using an advanced AI algorithm',
                 'group_info': 'Data Science and Machine Learning Group 1',
+                'dev_info': 'This site Designed & Developed and Deployed by Group 1', // DÜZELTME: Yeni çeviri metni
                 'btn_calculate': '🔍 Calculate Credit Risk',
                 'btn_reset': '🔄 Reset Form',
 
-                // Labels & Placeholders & Options (Kısaltıldı)
+                // Labels
                 'l_status': '💰 Current Account Status:',
                 'l_duration': '📅 Credit Duration (Months):',
                 'l_credit_history': '📊 Credit History:',
@@ -530,7 +679,7 @@
                 'l_personal_status': '👤 Personal Status & Sex:',
                 'l_debtors': '🤝 Other Debtors/Guarantors:',
                 'l_residence': '🏠 Present Residence Since (Years):',
-                'l_property': '🏡 Property Type:',
+                'l_property': '🏡 Mülkiyet Tipi:',
                 'l_age': '🎂 Age:',
                 'l_other_plans': '💳 Other Installment Plans:',
                 'l_housing': '🏘️ Housing Status:',
@@ -540,6 +689,7 @@
                 'l_telephone': '📞 Telephone (Registered):',
                 'l_foreign_worker': '🌍 Foreign Worker:',
 
+                // Placeholders
                 'p_duration': 'Ex: 24 (min 4, max 72)',
                 'p_credit_amount': 'Ex: 3500 TL',
                 'p_installment_rate': '% of Income (1-4)',
@@ -547,24 +697,78 @@
                 'p_age': 'Ex: 35 (19-75)',
                 'p_existing_credits': '1-4 credits',
                 'p_maintenance': '1 or 2',
-                'opt_select': 'Select',
-                
-                // Result Box (SweetAlert İçin)
-                'res_approved': 'Credit Approved',
-                'res_warning': 'Conditional Approval',
-                'res_rejected': 'Credit Rejected',
-                'res_probability': 'Approval Probability:',
 
-                // Option verileri (Diğer tüm Axxx kodlarını buraya ekleyin)
-                'A11': 'Current Account Balance < 0 TL', 'A12': 'Current Account Balance 0 ≤ x < 200 TL', 'A13': 'Current Account Balance ≥ 200 TL / Salary Account', 'A14': 'No Registered Current Account', 'A30': 'No Prior Credit / All Paid Regularly', 'A31': 'All Credits at this Bank Paid Regularly', 'A32': 'No Delay in Existing Credits', 'A33': 'Delay Experienced in Past Credits', 'A34': 'Serious Past Problems (Very Critical)', 'A40': 'New car', 'A41': 'Used car', 'A42': 'Furniture/Equipment', 'A43': 'Radio/Television', 'A44': 'Home improvement', 'A45': 'Education', 'A46': 'Business development', 'A49': 'Vacation / Other', 'A410': 'Clothing / Footwear', 'A61': '< 100 TL', 'A62': '100 ≤ x < 500 TL', 'A63': '500 ≤ x < 1000 TL', 'A64': '≥ 1000 TL', 'A65': 'Unknown / No Savings', 'A71': 'Unemployed', 'A72': '< 1 year', 'A73': '1 ≤ x < 4 years', 'A74': '4 ≤ x < 7 years', 'A75': '≥ 7 years', 'A93': 'Male: Single', 'A94': 'Male: Married / Widowed', 'A91': 'Male: Divorced / Separated', 'A95': 'Female: Single', 'A92': 'Female: Married / Divorced / Separated', 'A101': 'None', 'A102': 'Co-debtor', 'A103': 'Guarantor', 'A121': 'Real Estate (House/Land)', 'A122': 'Life Insurance / Building Society Savings', 'A123': 'Car or Other Used Property', 'A124': 'Unknown / No Property', 'A141': 'Bank', 'A142': 'Stores/Institutions', 'A143': 'None', 'A151': 'Rent', 'A152': 'Own Home', 'A153': 'Free Tenancy / Other', 'A171': 'Unemployed / Unskilled - Non-resident', 'A172': 'Unskilled - Resident Employee', 'A173': 'Skilled Employee / Civil Servant', 'A174': 'Management / Self-employed', 'A191': 'None', 'A192': 'Yes (Landline/Registered GSM)', 'A201': 'No', 'A202': 'Yes',
+                // Select Options
+                'opt_select': 'Select',
+                'A11': 'Current Account Balance < 0 TL',
+                'A12': 'Current Account Balance 0 ≤ x < 200 TL',
+                'A13': 'Current Account Balance ≥ 200 TL / Salary Account',
+                'A14': 'No Registered Current Account',
+                'A30': 'No Prior Credit / All Paid Regularly',
+                'A31': 'All Credits at this Bank Paid Regularly',
+                'A32': 'No Delay in Existing Credits',
+                'A33': 'Delay Experienced in Past Credits',
+                'A34': 'Serious Past Problems (Very Critical)',
+                'A40': 'New car',
+                'A41': 'Used car',
+                'A42': 'Furniture/Equipment',
+                'A43': 'Radio/Television',
+                'A44': 'Home improvement',
+                'A45': 'Education',
+                'A46': 'Business development',
+                'A49': 'Vacation / Other',
+                'A410': 'Clothing / Footwear',
+                'A61': '< 100 TL',
+                'A62': '100 ≤ x < 500 TL',
+                'A63': '500 ≤ x < 1000 TL',
+                'A64': '≥ 1000 TL',
+                'A65': 'Unknown / No Savings',
+                'A71': 'Unemployed',
+                'A72': '< 1 year',
+                'A73': '1 ≤ x < 4 years',
+                'A74': '4 ≤ x < 7 years',
+                'A75': '≥ 7 years',
+                'A93': 'Male: Single',
+                'A94': 'Male: Married / Widowed',
+                'A91': 'Male: Divorced / Separated',
+                'A95': 'Female: Single',
+                'A92': 'Female: Married / Divorced / Separated',
+                'A101': 'None',
+                'A102': 'Co-debtor',
+                'A103': 'Guarantor',
+                'A121': 'Real Estate (House/Land)',
+                'A122': 'Life Insurance / Building Society Savings',
+                'A123': 'Car or Other Used Property',
+                'A124': 'Unknown / No Property',
+                'A141': 'Bank',
+                'A142': 'Stores/Institutions',
+                'A143': 'None',
+                'A151': 'Rent',
+                'A152': 'Own Home',
+                'A153': 'Free Tenancy / Other',
+                'A171': 'Unemployed / Unskilled - Non-resident',
+                'A172': 'Unskilled - Resident Employee',
+                'A173': 'Skilled Employee / Civil Servant',
+                'A174': 'Management / Self-employed',
+                'A191': 'None',
+                'A192': 'Yes (Landline/Registered GSM)',
+                'A201': 'No',
+                'A202': 'Yes',
+
+                // Result Box (Mocked)
+                'res_approved': '✅ Credit Approved',
+                'res_warning': '⚠️ Conditional Approval',
+                'res_rejected': '❌ Credit Rejected',
+                'res_probability': 'Approval Probability:',
             }
         };
 
         let currentLang = 'tr';
         const langSelect = document.getElementById('langSelect');
-        langSelect.value = currentLang;
+        langSelect.value = currentLang; // Select kutusunun başlangıç değerini ayarla
 
         function updateContent(lang) {
+            // data-key'e sahip elementler için metin içeriğini güncelle
             document.querySelectorAll('[data-key]').forEach(element => {
                 const key = element.getAttribute('data-key');
                 if (translations[lang][key]) {
@@ -572,6 +776,7 @@
                 }
             });
 
+            // Input/select option'larındaki metinleri güncelle
             document.querySelectorAll('select option').forEach(option => {
                 const key = option.getAttribute('data-key');
                 if (key && translations[lang][key]) {
@@ -579,6 +784,7 @@
                 }
             });
 
+            // Placeholder içeriğini güncelle
             document.querySelectorAll('[data-key-placeholder]').forEach(element => {
                 const key = element.getAttribute('data-key-placeholder');
                 if (translations[lang][key]) {
@@ -588,85 +794,109 @@
 
             document.documentElement.setAttribute('lang', lang);
             document.title = translations[lang]['title'];
+
+            // Sonuç bölümü görünür durumdaysa, içeriğini güncelle
+            const resultSection = document.getElementById('resultSection');
+            if (!resultSection.classList.contains('hidden')) {
+                const resultTitle = resultSection.querySelector('.result-title');
+                const resultProbContainer = resultSection.querySelector('.result-probability');
+                
+                if (resultTitle && resultProbContainer) {
+                    // Mevcut durumu belirle
+                    let statusKey = 'res_warning';
+                    if (resultTitle.classList.contains('success')) {
+                        statusKey = 'res_approved';
+                    } else if (resultTitle.classList.contains('danger')) {
+                        statusKey = 'res_rejected';
+                    }
+                    
+                    // Olasılık değerini (örn. "%85") koru
+                    const strongElement = resultProbContainer.querySelector('strong');
+                    const probabilityValue = strongElement ? strongElement.textContent : '';
+
+                    // Başlık ve olasılık etiketini güncelle
+                    // Sınıfı koruyarak sadece metni güncelle
+                    const currentClasses = resultTitle.className;
+                    resultTitle.textContent = translations[lang][statusKey];
+                    resultTitle.className = currentClasses; // Sınıfları geri yükle (CSS için gerekli)
+                    
+                    resultProbContainer.innerHTML = `${translations[lang]['res_probability']} <strong>${probabilityValue}</strong>`;
+                }
+            }
         }
 
         langSelect.addEventListener('change', function() {
-            currentLang = this.value;
+            currentLang = this.value; // Seçilen değeri al ('tr' veya 'en')
             updateContent(currentLang);
         });
         
+        // Başlangıçta Türkçe ayarla
         updateContent(currentLang);
 
         document.getElementById('creditForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Simüle edilmiş sonuç (Gerçek uygulamada API çağrısı yapılmalı)
+            // Simüle edilmiş sonuç (gerçek uygulamada backend'e gönderilecek)
             const mockResult = generateMockResult();
             
             displayResult(mockResult);
-
-            // Formun sıfırlanması
-            resetForm();
         });
 
         function generateMockResult() {
+            // Rastgele bir tahmin sonucu üret
             const random = Math.random();
-            let risk_key, icon, color;
+            let risk_key, icon;
             let probabilityValue;
 
             if (random > 0.7) {
                 risk_key = 'res_approved';
-                icon = 'success';
-                color = '#28a745'; 
+                icon = '🎉';
                 probabilityValue = 75 + Math.floor(Math.random() * 20);
             } else if (random > 0.4) {
                 risk_key = 'res_warning';
-                icon = 'warning';
-                color = '#ffc107'; 
+                icon = '⚖️';
                 probabilityValue = 50 + Math.floor(Math.random() * 25);
             } else {
                 risk_key = 'res_rejected';
-                icon = 'error';
-                color = '#dc3545'; 
+                icon = '🚫';
                 probabilityValue = 10 + Math.floor(Math.random() * 40);
             }
 
             return {
+                risk_level: risk_key.replace('res_', ''), // 'approved', 'warning', 'rejected'
                 status: translations[currentLang][risk_key],
-                probability: probabilityValue,
-                icon: icon,
-                color: color
+                probability: '%' + probabilityValue,
+                icon: icon
             };
         }
 
         function displayResult(result) {
-            const probabilityLabel = translations[currentLang]['res_probability'];
+            const resultSection = document.getElementById('resultSection');
+            const probabilityNum = parseInt(result.probability.replace('%', ''));
             
-            // SweetAlert HTML içeriği (Progress Bar)
-            const htmlContent = `
-                <p style="margin-bottom: 20px; color: #555;">
-                    ${probabilityLabel} <strong>%${result.probability}</strong>
-                </p>
-                <div style="width: 100%; height: 10px; background: #eee; border-radius: 5px; overflow: hidden; margin-bottom: 10px;">
-                    <div style="height: 100%; width: ${result.probability}%; background: ${result.color}; transition: width 1s ease-out;"></div>
+            // Mevcut dilin onay olasılığı etiketini al
+            const probabilityLabel = translations[currentLang]['res_probability'];
+            const riskLevelClass = result.risk_level; // 'approved', 'warning', 'rejected'
+            
+            // DÜZELTME: result-title'a riskLevelClass eklendi
+            resultSection.innerHTML = `
+                <div class="result-box ${riskLevelClass}">
+                    <div class="result-icon">${result.icon}</div>
+                    <div class="result-title ${riskLevelClass}">${result.status}</div>
+                    <div class="result-probability">${probabilityLabel} <strong>${result.probability}</strong></div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${probabilityNum}%"></div>
+                    </div>
                 </div>
             `;
-
-            // SweetAlert ile sonucu göster
-            Swal.fire({
-                title: result.status,
-                html: htmlContent,
-                icon: result.icon, 
-                confirmButtonText: currentLang === 'tr' ? 'Tamam' : 'OK',
-                confirmButtonColor: result.color,
-                customClass: {
-                    title: 'swal2-title' 
-                }
-            });
+            
+            resultSection.classList.remove('hidden');
+            resultSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
         function resetForm() {
             document.getElementById('creditForm').reset();
+            document.getElementById('resultSection').classList.add('hidden');
         }
     </script>
 </body>
