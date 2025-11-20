@@ -228,7 +228,7 @@
         }
 
         @media (max-width: 768px) {
-            /* Mobil için repositioning */
+            /* Mobil için repositioning: Tüm köşe bilgileri akışa dahil edilir */
             .top-right, .lang-toggle-container, .bottom-left {
                 position: static;
                 display: block;
@@ -241,12 +241,13 @@
             }
 
             .lang-toggle-container {
-                /* Dil seçimi kutusu üstte kalsın diye margin-top ekledim */
+                /* Dil seçimi kutusu üstte kalır */
                 margin-bottom: 15px; 
             }
             
+            /* bottom-left (Designed & Developed) HTML sırasına göre en sonda yer alır. */
             .bottom-left {
-                margin-top: 10px;
+                margin-top: 10px; /* Üstteki öğelerden ayırmak için bir boşluk */
             }
 
             #langSelect {
