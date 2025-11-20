@@ -5,44 +5,367 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kredi Riski Tahmini</title>
     <style>
-        body { font-family: 'Arial', sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 20px; }
-        .container { max-width: 900px; margin: auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
-        h1 { text-align: center; color: #007bff; margin-bottom: 25px; }
-        .form-row { display: flex; flex-wrap: wrap; margin: 0 -10px; }
-        .form-group { flex: 1 1 calc(33.333% - 20px); margin: 0 10px 20px 10px; min-width: 250px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9em; }
-        input[type="number"], select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 1em; }
-        button { width: 100%; padding: 12px; background-color: #28a745; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 1.1em; margin-top: 15px; transition: background-color 0.3s; }
-        button:hover { background-color: #218838; }
-        .result-box { margin-top: 30px; padding: 20px; border-radius: 8px; text-align: center; font-size: 1.2em; font-weight: bold; }
-        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        .danger { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
-        .warning { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated background circles */
+        .bg-circle {
+            position: fixed;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 20s infinite ease-in-out;
+            z-index: 0;
+        }
+
+        .bg-circle:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .bg-circle:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            top: 50%;
+            right: -50px;
+            animation-delay: 5s;
+        }
+
+        .bg-circle:nth-child(3) {
+            width: 250px;
+            height: 250px;
+            bottom: -100px;
+            left: 30%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .header-icon {
+            font-size: 64px;
+            margin-bottom: 10px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.15s; }
+        .form-group:nth-child(3) { animation-delay: 0.2s; }
+        .form-group:nth-child(4) { animation-delay: 0.25s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95em;
+            transition: color 0.3s;
+        }
+
+        input[type="number"], select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            background: white;
+            color: #333;
+        }
+
+        input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        input[type="number"]:hover, select:hover {
+            border-color: #b0b8ea;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 16px;
+            margin-top: 30px;
+        }
+
+        button {
+            flex: 1;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        button:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-calculate {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-calculate:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+        }
+
+        .btn-reset {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+        }
+
+        .btn-reset:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.5);
+        }
+
+        .result-box {
+            margin-top: 40px;
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            animation: resultAppear 0.5s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes resultAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .result-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .result-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        .result-title {
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .result-probability {
+            font-size: 1.3em;
+            margin-top: 10px;
+        }
+
+        .success {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            color: #155724;
+            border: 3px solid #28a745;
+        }
+
+        .danger {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: #721c24;
+            border: 3px solid #dc3545;
+        }
+
+        .warning {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            color: #856404;
+            border: 3px solid #ffc107;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 1s ease-out;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 24px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .button-container {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
+    <div class="bg-circle"></div>
+    <div class="bg-circle"></div>
+    <div class="bg-circle"></div>
+
     <div class="container">
-        <h1>🏦 Kredi Riski Tahmin Aracı</h1>
+        <div class="header">
+            <div class="header-icon">🏦</div>
+            <h1>Kredi Riski Tahmin Aracı</h1>
+            <p class="subtitle">Gelişmiş yapay zeka algoritması ile kredi onay tahmini</p>
+        </div>
 
-        {% if result %}
-            <div class="result-box {{ result.risk_level }}">
-                <h2>{{ result.status }}</h2>
-                {% if result.probability %}
-                    <p>Onaylanma Olasılığı: **{{ result.probability }}**</p>
-                {% endif %}
-                {% if result.error %}
-                    <p style="font-weight: normal; color: #555;">Hata Detayı: {{ result.error }}</p>
-                {% endif %}
-            </div>
-            <hr>
-        {% endif %}
+        <div id="resultSection" class="hidden"></div>
 
-        <form method="POST">
+        <form id="creditForm">
             <div class="form-row">
-
                 <div class="form-group">
-                    <label for="Status">Mevcut Hesap Durumu:</label>
-                    <select name="Status" required>
+                    <label for="Status">💰 Mevcut Hesap Durumu:</label>
+                    <select name="Status" id="Status" required>
                         <option value="">Seçiniz</option>
                         <option value="A11">Mevcut Hesap Bakiyesi &lt; 0 TL</option>
                         <option value="A12">Mevcut Hesap Bakiyesi 0 ≤ x &lt; 200 TL</option>
@@ -52,13 +375,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="Duration">Kredi Süresi (Ay):</label>
-                    <input type="number" name="Duration" min="4" max="72" placeholder="Örn: 24 (min 4, max 72)" required>
+                    <label for="Duration">📅 Kredi Süresi (Ay):</label>
+                    <input type="number" name="Duration" id="Duration" min="4" max="72" placeholder="Örn: 24 (min 4, max 72)" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="CreditHistory">Kredi Geçmişi:</label>
-                    <select name="CreditHistory" required>
+                    <label for="CreditHistory">📊 Kredi Geçmişi:</label>
+                    <select name="CreditHistory" id="CreditHistory" required>
                         <option value="">Seçiniz</option>
                         <option value="A30">Önceden Kredi Yok / Hepsi Düzenli Ödendi</option>
                         <option value="A31">Bu Bankadaki Tüm Krediler Düzenli Ödendi</option>
@@ -69,8 +392,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="Purpose">Kredi Amacı:</label>
-                    <select name="Purpose" required>
+                    <label for="Purpose">🎯 Kredi Amacı:</label>
+                    <select name="Purpose" id="Purpose" required>
                         <option value="">Seçiniz</option>
                         <option value="A40">Yeni araba</option>
                         <option value="A41">Kullanılmış araba</option>
@@ -85,13 +408,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="CreditAmount">Kredi Miktarı (TL):</label>
-                    <input type="number" name="CreditAmount" min="250" max="18424" placeholder="Örn: 3500 TL (min 250, max 18424)" required>
+                    <label for="CreditAmount">💵 Kredi Miktarı (TL):</label>
+                    <input type="number" name="CreditAmount" id="CreditAmount" min="250" max="18424" placeholder="Örn: 3500 TL" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="Savings">Tasarruf Hesabı:</label>
-                    <select name="Savings" required>
+                    <label for="Savings">💎 Tasarruf Hesabı:</label>
+                    <select name="Savings" id="Savings" required>
                         <option value="">Seçiniz</option>
                         <option value="A61">&lt; 100 TL</option>
                         <option value="A62">100 ≤ x &lt; 500 TL</option>
@@ -102,8 +425,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="EmploymentSince">İstihdam Durumu/Süresi:</label>
-                    <select name="EmploymentSince" required>
+                    <label for="EmploymentSince">👔 İstihdam Durumu/Süresi:</label>
+                    <select name="EmploymentSince" id="EmploymentSince" required>
                         <option value="">Seçiniz</option>
                         <option value="A71">İşsiz</option>
                         <option value="A72">&lt; 1 yıl</option>
@@ -114,13 +437,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="InstallmentRate">Taksit Oranı (%):</label>
-                    <input type="number" name="InstallmentRate" min="1" max="4" placeholder="Gelirin %'si olarak 1-4" required>
+                    <label for="InstallmentRate">📈 Taksit Oranı (%):</label>
+                    <input type="number" name="InstallmentRate" id="InstallmentRate" min="1" max="4" placeholder="Gelirin %'si (1-4)" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="PersonalStatusSex">Kişisel Durum & Cinsiyet:</label>
-                    <select name="PersonalStatusSex" required>
+                    <label for="PersonalStatusSex">👤 Kişisel Durum & Cinsiyet:</label>
+                    <select name="PersonalStatusSex" id="PersonalStatusSex" required>
                         <option value="">Seçiniz</option>
                         <option value="A93">Erkek: Bekar</option>
                         <option value="A94">Erkek: Evli / Dul</option>
@@ -131,8 +454,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="OtherDebtors">Diğer Borçlular/Kefiller:</label>
-                    <select name="OtherDebtors" required>
+                    <label for="OtherDebtors">🤝 Diğer Borçlular/Kefiller:</label>
+                    <select name="OtherDebtors" id="OtherDebtors" required>
                         <option value="">Seçiniz</option>
                         <option value="A101">Yok</option>
                         <option value="A102">Ortak Borçlu</option>
@@ -141,13 +464,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="PresentResidenceSince">Mevcut İkamet Süresi (Yıl):</label>
-                    <input type="number" name="PresentResidenceSince" min="1" max="4" placeholder="1-4 yıl" required>
+                    <label for="PresentResidenceSince">🏠 Mevcut İkamet Süresi (Yıl):</label>
+                    <input type="number" name="PresentResidenceSince" id="PresentResidenceSince" min="1" max="4" placeholder="1-4 yıl" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="Property">Mülkiyet Tipi:</label>
-                    <select name="Property" required>
+                    <label for="Property">🏡 Mülkiyet Tipi:</label>
+                    <select name="Property" id="Property" required>
                         <option value="">Seçiniz</option>
                         <option value="A121">Gayrimenkul (Ev/Arsa)</option>
                         <option value="A122">Hayat Sigortası / İnşaat Tasarrufları</option>
@@ -157,13 +480,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="Age">Yaş:</label>
-                    <input type="number" name="Age" min="19" max="75" placeholder="Örn: 35 (min 19, max 75)" required>
+                    <label for="Age">🎂 Yaş:</label>
+                    <input type="number" name="Age" id="Age" min="19" max="75" placeholder="Örn: 35 (19-75)" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="OtherInstallmentPlans">Diğer Taksit Planları:</label>
-                    <select name="OtherInstallmentPlans" required>
+                    <label for="OtherInstallmentPlans">💳 Diğer Taksit Planları:</label>
+                    <select name="OtherInstallmentPlans" id="OtherInstallmentPlans" required>
                         <option value="">Seçiniz</option>
                         <option value="A141">Banka</option>
                         <option value="A142">Mağazalar/Kurumlar</option>
@@ -172,8 +495,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="Housing">Konut Durumu:</label>
-                    <select name="Housing" required>
+                    <label for="Housing">🏘️ Konut Durumu:</label>
+                    <select name="Housing" id="Housing" required>
                         <option value="">Seçiniz</option>
                         <option value="A151">Kira</option>
                         <option value="A152">Kendi Evi</option>
@@ -182,13 +505,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="NumberExistingCredits">Mevcut Kredi Sayısı:</label>
-                    <input type="number" name="NumberExistingCredits" min="1" max="4" placeholder="1-4 kredi" required>
+                    <label for="NumberExistingCredits">🔢 Mevcut Kredi Sayısı:</label>
+                    <input type="number" name="NumberExistingCredits" id="NumberExistingCredits" min="1" max="4" placeholder="1-4 kredi" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="Job">Meslek:</label>
-                    <select name="Job" required>
+                    <label for="Job">💼 Meslek:</label>
+                    <select name="Job" id="Job" required>
                         <option value="">Seçiniz</option>
                         <option value="A171">İşsiz / Kayıtsız Çalışan</option>
                         <option value="A172">Niteliksiz / Yerleşik Çalışan</option>
@@ -198,13 +521,13 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="NumberPeopleMaintenance">Bakmakla Yükümlü Olduğu Kişi Sayısı:</label>
-                    <input type="number" name="NumberPeopleMaintenance" min="1" max="2" placeholder="1 veya 2" required>
+                    <label for="NumberPeopleMaintenance">👨‍👩‍👧 Bakmakla Yükümlü Kişi Sayısı:</label>
+                    <input type="number" name="NumberPeopleMaintenance" id="NumberPeopleMaintenance" min="1" max="2" placeholder="1 veya 2" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="Telephone">Telefon (Tescilli):</label>
-                    <select name="Telephone" required>
+                    <label for="Telephone">📞 Telefon (Tescilli):</label>
+                    <select name="Telephone" id="Telephone" required>
                         <option value="">Seçiniz</option>
                         <option value="A191">Yok</option>
                         <option value="A192">Var (Sabit hat/Kayıtlı GSM)</option>
@@ -212,18 +535,90 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="ForeignWorker">Yabancı İşçi:</label>
-                    <select name="ForeignWorker" required>
+                    <label for="ForeignWorker">🌍 Yabancı İşçi:</label>
+                    <select name="ForeignWorker" id="ForeignWorker" required>
                         <option value="">Seçiniz</option>
                         <option value="A201">Hayır</option>
                         <option value="A202">Evet</option>
                     </select>
                 </div>
-
             </div>
-            <button type="submit">Kredi Riskini Hesapla</button>
-        </form>
 
+            <div class="button-container">
+                <button type="submit" class="btn-calculate">
+                    🔍 Kredi Riskini Hesapla
+                </button>
+                <button type="button" class="btn-reset" onclick="resetForm()">
+                    🔄 Formu Sıfırla
+                </button>
+            </div>
+        </form>
     </div>
+
+    <script>
+        document.getElementById('creditForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Form verilerini al
+            const formData = new FormData(this);
+            
+            // Simüle edilmiş sonuç (gerçek uygulamada backend'e gönderilecek)
+            const mockResult = generateMockResult();
+            
+            displayResult(mockResult);
+        });
+
+        function generateMockResult() {
+            // Rastgele bir tahmin sonucu üret
+            const random = Math.random();
+            
+            if (random > 0.7) {
+                return {
+                    risk_level: 'success',
+                    status: '✅ Kredi Onaylandı',
+                    probability: '%' + (75 + Math.floor(Math.random() * 20)),
+                    icon: '🎉'
+                };
+            } else if (random > 0.4) {
+                return {
+                    risk_level: 'warning',
+                    status: '⚠️ Koşullu Onay',
+                    probability: '%' + (50 + Math.floor(Math.random() * 25)),
+                    icon: '⚖️'
+                };
+            } else {
+                return {
+                    risk_level: 'danger',
+                    status: '❌ Kredi Reddedildi',
+                    probability: '%' + (10 + Math.floor(Math.random() * 40)),
+                    icon: '🚫'
+                };
+            }
+        }
+
+        function displayResult(result) {
+            const resultSection = document.getElementById('resultSection');
+            const probabilityNum = parseInt(result.probability.replace('%', ''));
+            
+            resultSection.innerHTML = `
+                <div class="result-box ${result.risk_level}">
+                    <div class="result-icon">${result.icon}</div>
+                    <div class="result-title">${result.status}</div>
+                    <div class="result-probability">Onaylanma Olasılığı: <strong>${result.probability}</strong></div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${probabilityNum}%"></div>
+                    </div>
+                </div>
+            `;
+            
+            resultSection.classList.remove('hidden');
+            resultSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function resetForm() {
+            document.getElementById('creditForm').reset();
+            document.getElementById('resultSection').classList.add('hidden');
+        }
+    </script>
 </body>
 </html>
