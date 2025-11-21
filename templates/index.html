@@ -227,6 +227,7 @@
             top: auto; 
         }
 
+        /* --- MOBİL UYUMLULUK KODU --- */
         @media (max-width: 768px) {
             /* Mobil için repositioning: Tüm köşe bilgileri akışa dahil edilir */
             .top-right, .lang-toggle-container, .bottom-left {
@@ -253,7 +254,18 @@
             #langSelect {
                 width: 100%;
             }
+
+            /* EKLEME: Butonların mobil cihazlarda tam genişlikte ve alt alta olması */
+            .button-container {
+                flex-direction: column;
+                gap: 10px; /* Butonlar arasına boşluk ekler */
+            }
+            
+            button {
+                width: 100%; /* Her bir butonu tam genişlik yapar */
+            }
         }
+        /* --- MOBİL UYUMLULUK KODU SONU --- */
 
         /* Result Box Styling (Geri kalan stiller) */
         .result-box {
@@ -292,10 +304,6 @@
             font-size: 1.3em;
             margin-top: 10px;
         }
-
-        /* HATA DÜZELTME: Eski genel renk sınıfları (success, danger, warning) 
-           kaldırıldı ve yerine sadece result-box ve içindeki metinlere 
-           uygulanan doğru sınıflar eklendi. */
         
         .result-box.success {
             background: #d4edda;
@@ -310,7 +318,7 @@
             border: 3px solid #ffc107;
         }
         
-        /* DÜZELTME: Başlık (result-title) metin rengini net olarak ayarlamak için */
+        /* Başlık (result-title) metin rengi ayarı */
         .result-box.success .result-title,
         .result-box.success .result-probability {
             color: #155724; /* Başarılı yeşil metin */
@@ -567,7 +575,6 @@
                 'h1_title': 'Kredi Risk Analizi',
                 'subtitle': 'Gelişmiş yapay zeka algoritması ile kredi onay tahmini',
                 'group_info': 'Veri Bilimi ve Makine Öğrenmesi Grup 1',
-                // 'dev_info' çeviri anahtarı, kullanıcının isteği üzerine KALDIRILDI.
                 'btn_calculate': '🔍 Kredi Riskini Hesapla',
                 'btn_reset': '🔄 Formu Sıfırla',
                 
@@ -670,7 +677,6 @@
                 'h1_title': 'Credit Risk Prediction Tool',
                 'subtitle': 'Credit approval prediction using an advanced AI algorithm',
                 'group_info': 'Data Science and Machine Learning Group 1',
-                // 'dev_info' çeviri anahtarı, kullanıcının isteği üzerine KALDIRILDI.
                 'btn_calculate': '🔍 Calculate Credit Risk',
                 'btn_reset': '🔄 Reset Form',
 
@@ -686,7 +692,7 @@
                 'l_personal_status': '👤 Personal Status & Sex:',
                 'l_debtors': '🤝 Other Debtors/Guarantors:',
                 'l_residence': '🏠 Present Residence Since (Years):',
-                'l_property': '🏡 Mülkiyet Tipi:',
+                'l_property': '🏡 Property Type:',
                 'l_age': '🎂 Age:',
                 'l_other_plans': '💳 Other Installment Plans:',
                 'l_housing': '🏘️ Housing Status:',
@@ -778,7 +784,6 @@
             // data-key'e sahip elementler için metin içeriğini güncelle
             document.querySelectorAll('[data-key]').forEach(element => {
                 const key = element.getAttribute('data-key');
-                // NOT: 'dev_info' gibi kaldırılan anahtarlar burada bir sorun yaratmayacaktır.
                 if (translations[lang][key]) {
                     element.textContent = translations[lang][key];
                 }
@@ -840,6 +845,7 @@
         // Başlangıçta Türkçe ayarla
         updateContent(currentLang);
 
+        // --- İSTENEN ÖZELLİK: HESAPLA BUTONUNA BASILDIĞINDA OTOMATİK SIFIRLAMA ---
         document.getElementById('creditForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -847,6 +853,9 @@
             const mockResult = generateMockResult();
             
             displayResult(mockResult);
+
+            // Kredi riskini hesapladıktan ve sonucu gösterdikten sonra formu sıfırla
+            resetForm(); 
         });
 
         function generateMockResult() {
@@ -885,7 +894,6 @@
             const probabilityLabel = translations[currentLang]['res_probability'];
             const riskLevelClass = result.risk_level;
             
-            // Düzeltilen CSS sayesinde metin rengi artık doğru ayarlanacaktır.
             resultSection.innerHTML = `
                 <div class="result-box ${riskLevelClass}">
                     <div class="result-icon">${result.icon}</div>
