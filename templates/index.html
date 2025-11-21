@@ -3,16 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title data-key="title">Kredi Risk Analizi</title>
+    <title>Kredi Risk Analizi</title>
     <style>
         /* --- GENEL STİL AYARLARI --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
@@ -23,257 +17,115 @@
             padding-bottom: 50px;
         }
         
-        /* --- SPLASH SCREEN (YÜKLEME EKRANI) --- */
+        /* --- SPLASH SCREEN --- */
         #splashScreen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(135deg, #0097a7 0%, #00bcd4 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999; 
-            opacity: 1;
-            transition: opacity 0.5s ease-out, visibility 0.5s;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999; opacity: 1; transition: opacity 0.5s ease-out, visibility 0.5s;
         }
-
-        #splashScreen.hidden-splash {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .splash-content {
-            text-align: center;
-            max-width: 85%;
-            padding: 20px;
-        }
-
+        #splashScreen.hidden-splash { opacity: 0; visibility: hidden; pointer-events: none; }
+        .splash-content { text-align: center; max-width: 85%; padding: 20px; }
         .splash-text {
-            font-size: clamp(1.5rem, 5vw, 2.5rem);
-            font-weight: 700;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            margin-bottom: 10px;
-            animation: fadeInUp 0.8s ease-out;
+            font-size: clamp(1.5rem, 5vw, 2.5rem); font-weight: 700; color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); margin-bottom: 10px; animation: fadeInUp 0.8s ease-out;
         }
-
         .splash-subtitle {
-            font-size: clamp(1rem, 3vw, 1.2rem);
-            color: rgba(255, 255, 255, 0.95);
-            animation: fadeInUp 0.8s ease-out 0.2s both;
+            font-size: clamp(1rem, 3vw, 1.2rem); color: rgba(255, 255, 255, 0.95); animation: fadeInUp 0.8s ease-out 0.2s both;
         }
-
         .splash-loader {
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid white;
-            border-radius: 50%;
-            margin: 25px auto 0;
-            animation: spin 1s linear infinite;
+            width: 40px; height: 40px; border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white; border-radius: 50%; margin: 25px auto 0; animation: spin 1s linear infinite;
         }
-
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- ARKA PLAN ANİMASYONLARI --- */
+        /* --- ARKA PLAN --- */
         .bg-circle {
-            position: fixed;
-            border-radius: 50%;
-            background: rgba(0, 188, 212, 0.1); 
-            animation: float 20s infinite ease-in-out;
-            z-index: 0;
-            pointer-events: none;
+            position: fixed; border-radius: 50%; background: rgba(0, 188, 212, 0.1); 
+            animation: float 20s infinite ease-in-out; z-index: 0; pointer-events: none;
         }
-
         @media (min-width: 768px) {
-            .bg-circle:nth-child(1) { width: 300px; height: 300px; top: -50px; left: -50px; animation-delay: 0s; }
+            .bg-circle:nth-child(1) { width: 300px; height: 300px; top: -50px; left: -50px; }
             .bg-circle:nth-child(2) { width: 200px; height: 200px; top: 40%; right: -40px; animation-delay: 5s; }
             .bg-circle:nth-child(3) { width: 150px; height: 150px; bottom: -50px; left: 20%; animation-delay: 10s; }
         }
+        @keyframes float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-20px) rotate(180deg); } }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-        }
-
-        /* --- ANA KONTEYNER --- */
+        /* --- KONTEYNER --- */
         .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(5px);
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-            position: relative;
-            z-index: 1;
-            animation: slideIn 0.6s ease-out;
+            width: 100%; max-width: 1200px; margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px);
+            padding: 20px; border-radius: 20px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            position: relative; z-index: 1; animation: slideIn 0.6s ease-out;
         }
-
         @media (min-width: 768px) { .container { padding: 40px; } }
         @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         .header { text-align: center; margin-bottom: 25px; }
-        
         h1 {
             font-size: clamp(1.6rem, 5vw, 2.5rem);
             background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 8px;
-            font-weight: 800;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            margin-bottom: 8px; font-weight: 800;
         }
-
         .subtitle { color: #666; font-size: clamp(0.85rem, 3vw, 1.1rem); }
 
-        /* --- FORM GRİD YAPISI --- */
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr; 
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        @media (min-width: 600px) {
-            .form-row { grid-template-columns: repeat(2, 1fr); gap: 20px; } 
-        }
-        
-        @media (min-width: 1024px) {
-            .form-row { grid-template-columns: repeat(3, 1fr); } 
-        }
+        /* --- FORM --- */
+        .form-row { display: grid; grid-template-columns: 1fr; gap: 15px; margin-bottom: 20px; }
+        @media (min-width: 600px) { .form-row { grid-template-columns: repeat(2, 1fr); gap: 20px; } }
+        @media (min-width: 1024px) { .form-row { grid-template-columns: repeat(3, 1fr); } }
 
         .form-group { margin-bottom: 5px; }
-        
-        label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: 600;
-            color: #444;
-            font-size: 0.9rem;
-        }
-
+        label { display: block; margin-bottom: 6px; font-weight: 600; color: #444; font-size: 0.9rem; }
         input[type="number"], select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            font-size: 1rem;
-            background: #fff;
-            color: #333;
-            appearance: none;
+            width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px;
+            font-size: 1rem; background: #fff; color: #333; appearance: none;
         }
+        input[type="number"]:focus, select:focus { outline: none; border-color: #00bcd4; box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.15); }
 
-        input[type="number"]:focus, select:focus {
-            outline: none;
-            border-color: #00bcd4;
-            box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.15);
-        }
-        
         /* --- BUTONLAR --- */
-        .button-container {
-            display: flex;
-            flex-direction: column; /* Mobilde alt alta */
-            gap: 15px;
-            margin-top: 30px;
-        }
-
-        @media (min-width: 600px) { 
-            .button-container { flex-direction: row; } /* Tablet/Desktop yan yana */
-        }
-
+        .button-container { display: flex; flex-direction: column; gap: 15px; margin-top: 30px; }
+        @media (min-width: 600px) { .button-container { flex-direction: row; } }
         button {
-            width: 100%;
-            padding: 16px;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 1.1rem;
-            font-weight: 600;
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            width: 100%; padding: 16px; border: none; border-radius: 12px; cursor: pointer;
+            font-size: 1.1rem; font-weight: 600; transition: transform 0.2s, box-shadow 0.2s;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
         }
-
-        /* Hesapla Butonu Stili */
-        .btn-calculate {
-            background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%);
-            color: white;
-            box-shadow: 0 4px 10px rgba(0, 188, 212, 0.3);
-            flex: 2; /* Geniş ekranda daha fazla yer kaplasın */
-        }
-        
+        .btn-calculate { background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%); color: white; box-shadow: 0 4px 10px rgba(0, 188, 212, 0.3); flex: 2; }
         .btn-calculate:active { transform: scale(0.98); }
         .btn-calculate:hover { box-shadow: 0 6px 15px rgba(0, 188, 212, 0.4); }
-
-        /* Sıfırla Butonu Stili (Yeni) */
-        .btn-reset {
-            background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
-            color: white;
-            box-shadow: 0 4px 10px rgba(255, 152, 0, 0.3);
-            flex: 1;
-        }
-
+        .btn-reset { background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%); color: white; box-shadow: 0 4px 10px rgba(255, 152, 0, 0.3); flex: 1; }
         .btn-reset:active { transform: scale(0.98); }
         .btn-reset:hover { box-shadow: 0 6px 15px rgba(255, 152, 0, 0.4); }
 
-        /* --- SONUÇ KUTUSU --- */
+        /* --- SONUÇ --- */
         #resultSection { margin-bottom: 20px; scroll-margin-top: 20px; }
         .hidden { display: none; }
-
-        .result-box {
-            padding: 25px;
-            border-radius: 15px;
-            text-align: center;
-            animation: resultAppear 0.5s ease-out;
-            background: #fff;
-            border: 2px solid transparent;
-        }
-
+        .result-box { padding: 25px; border-radius: 15px; text-align: center; animation: resultAppear 0.5s ease-out; background: #fff; border: 2px solid transparent; }
         @keyframes resultAppear { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-
         .result-icon { font-size: 3.5rem; margin-bottom: 10px; display: block; }
         .result-title { font-size: 1.6rem; font-weight: 700; margin-bottom: 5px; }
         .result-desc { font-size: 1.1rem; opacity: 0.8; }
-
         .result-box.success { background-color: #e8f5e9; border-color: #4caf50; color: #1b5e20; }
         .result-box.danger { background-color: #ffebee; border-color: #ef5350; color: #b71c1c; }
 
-        /* Dil Seçim Kutusu */
-        .lang-toggle-container {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            z-index: 10;
-        }
+        /* --- DİL SEÇİMİ --- */
+        .lang-toggle-container { position: absolute; top: 15px; right: 15px; z-index: 10; }
         #langSelect { padding: 5px 10px; font-size: 0.85rem; width: auto; }
         .footer-info { text-align: center; margin-top: 30px; font-size: 0.8rem; color: #777; }
-
     </style>
 </head>
 <body>
     <div id="splashScreen">
         <div class="splash-content">
-            <div class="splash-text" id="splashTitle">
-                Veri Bilimi ve Makine Öğrenmesi Dersi 1.Grup
-            </div>
-            <div class="splash-subtitle" id="splashSubtitle">
-                Kredi Risk Analiz Sistemi Başlatılıyor...
-            </div>
+            <div class="splash-text" id="splashTitle" data-key="splash_title">Veri Bilimi ve Makine Öğrenmesi</div>
+            <div class="splash-subtitle" id="splashSubtitle" data-key="splash_subtitle">Sistem Başlatılıyor...</div>
             <div class="splash-loader"></div>
         </div>
     </div>
     
-    <div class="bg-circle"></div>
-    <div class="bg-circle"></div>
-    <div class="bg-circle"></div>
+    <div class="bg-circle"></div><div class="bg-circle"></div><div class="bg-circle"></div>
 
     <div class="lang-toggle-container">
         <select id="langSelect">
@@ -293,193 +145,192 @@
         <form id="creditForm">
             <div class="form-row">
                 <div class="form-group">
-                    <label for="Status">💰 Mevcut Hesap Durumu:</label>
-                    <select name="Status" id="Status" required>
-                        <option value="">Seçiniz</option>
-                        <option value="A11">Mevcut Hesap Bakiyesi &lt; 0 TL</option>
-                        <option value="A12">Mevcut Hesap Bakiyesi 0 ≤ x &lt; 200 TL</option>
-                        <option value="A13">Mevcut Hesap Bakiyesi ≥ 200 TL / Maaş Hesabı</option>
-                        <option value="A14">Kayıtlı Mevcut Hesap Yok</option>
+                    <label data-key="l_status">💰 Mevcut Hesap Durumu:</label>
+                    <select name="Status" required>
+                        <option value="" data-key="opt_select">Seçiniz</option>
+                        <option value="A11" data-key="opt_bal_neg">Bakiye &lt; 0 TL</option>
+                        <option value="A12" data-key="opt_bal_low">0 ≤ x &lt; 200 TL</option>
+                        <option value="A13" data-key="opt_bal_high">≥ 200 TL / Maaş Hesabı</option>
+                        <option value="A14" data-key="opt_bal_none">Kayıtlı Hesap Yok</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="Duration">📅 Kredi Süresi (Ay):</label>
-                    <input type="number" name="Duration" id="Duration" min="4" max="72" placeholder="Örn: 24" required>
+                    <label data-key="l_duration">📅 Kredi Süresi (Ay):</label>
+                    <input type="number" name="Duration" min="4" max="72" data-ph="ph_duration" placeholder="Örn: 24" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="CreditHistory">📊 Kredi Geçmişi:</label>
-                    <select name="CreditHistory" id="CreditHistory" required>
-                        <option value="">Seçiniz</option>
-                        <option value="A30">Önceden Kredi Yok / Hepsi Düzenli Ödendi</option>
-                        <option value="A31">Bu Bankadaki Tüm Krediler Düzenli Ödendi</option>
-                        <option value="A32">Mevcut Kredilerde Gecikme Yok</option>
-                        <option value="A33">Eski Kredilerde Gecikme Yaşanmış</option>
-                        <option value="A34">Geçmişte Ciddi Sorunlar (Çok Kritik)</option>
+                    <label data-key="l_history">📊 Kredi Geçmişi:</label>
+                    <select name="CreditHistory" required>
+                        <option value="" data-key="opt_select">Seçiniz</option>
+                        <option value="A30" data-key="opt_hist_good">Sorunsuz / Düzenli</option>
+                        <option value="A31" data-key="opt_hist_bank">Bu Bankada Düzenli</option>
+                        <option value="A32" data-key="opt_hist_current">Mevcutlar Düzenli</option>
+                        <option value="A33" data-key="opt_hist_delay">Geçmişte Gecikme Var</option>
+                        <option value="A34" data-key="opt_hist_crit">Kritik Hesap/Sorunlu</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="Purpose">🎯 Kredi Amacı:</label>
-                    <select name="Purpose" id="Purpose" required>
-                        <option value="">Seçiniz</option>
-                        <option value="A40">Yeni araba</option>
-                        <option value="A41">Kullanılmış araba</option>
-                        <option value="A42">Mobilya/Ekipman</option>
-                        <option value="A43">Radyo/Televizyon</option>
-                        <option value="A44">Ev tadilatı</option>
-                        <option value="A45">Eğitim</option>
-                        <option value="A46">İş geliştirme</option>
-                        <option value="A49">Tatil / Diğer</option>
-                        <option value="A410">Giyim / Ayakkabı</option>
+                    <label data-key="l_purpose">🎯 Kredi Amacı:</label>
+                    <select name="Purpose" required>
+                        <option value="" data-key="opt_select">Seçiniz</option>
+                        <option value="A40" data-key="opt_purp_newcar">Yeni Araba</option>
+                        <option value="A41" data-key="opt_purp_usedcar">İkinci El Araba</option>
+                        <option value="A42" data-key="opt_purp_furn">Mobilya/Eşya</option>
+                        <option value="A43" data-key="opt_purp_radio">Radyo/TV</option>
+                        <option value="A44" data-key="opt_purp_rep">Tadilat</option>
+                        <option value="A45" data-key="opt_purp_edu">Eğitim</option>
+                        <option value="A46" data-key="opt_purp_biz">İş Geliştirme</option>
+                        <option value="A49" data-key="opt_purp_other">Diğer</option>
+                        <option value="A410" data-key="opt_purp_cloth">Giyim</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="CreditAmount">💵 Kredi Miktarı (TL):</label>
-                    <input type="number" name="CreditAmount" id="CreditAmount" min="250" max="100000" placeholder="Örn: 3500" required>
+                    <label data-key="l_amount">💵 Kredi Miktarı (TL):</label>
+                    <input type="number" name="CreditAmount" min="250" max="100000" data-ph="ph_amount" placeholder="Örn: 3500" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="Savings">💎 Tasarruf Hesabı:</label>
-                    <select name="Savings" id="Savings" required>
-                        <option value="">Seçiniz</option>
-                        <option value="A61"> &lt; 100 TL</option>
-                        <option value="A62">100 ≤ x &lt; 500 TL</option>
-                        <option value="A63">500 ≤ x &lt; 1000 TL</option>
-                        <option value="A64">≥ 1000 TL</option>
-                        <option value="A65">Bilinmiyor / Tasarruf Yok</option>
+                    <label data-key="l_savings">💎 Tasarruf Hesabı:</label>
+                    <select name="Savings" required>
+                        <option value="" data-key="opt_select">Seçiniz</option>
+                        <option value="A61" data-key="opt_sav_low">&lt; 100 TL</option>
+                        <option value="A62" data-key="opt_sav_mid">100 - 500 TL</option>
+                        <option value="A63" data-key="opt_sav_high">500 - 1000 TL</option>
+                        <option value="A64" data-key="opt_sav_vhigh">≥ 1000 TL</option>
+                        <option value="A65" data-key="opt_sav_unk">Yok / Bilinmiyor</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="EmploymentSince">👔 İstihdam Süresi:</label>
-                    <select name="EmploymentSince" id="EmploymentSince" required>
-                        <option value="">Seçiniz</option>
-                        <option value="A71">İşsiz</option>
-                        <option value="A72">&lt; 1 yıl</option>
-                        <option value="A73">1 ≤ x &lt; 4 yıl</option>
-                        <option value="A74">4 ≤ x &lt; 7 yıl</option>
-                        <option value="A75">≥ 7 yıl</option>
+                    <label data-key="l_employ">👔 İstihdam Süresi:</label>
+                    <select name="EmploymentSince" required>
+                        <option value="" data-key="opt_select">Seçiniz</option>
+                        <option value="A71" data-key="opt_emp_unemp">İşsiz</option>
+                        <option value="A72" data-key="opt_emp_low">&lt; 1 Yıl</option>
+                        <option value="A73" data-key="opt_emp_mid">1 - 4 Yıl</option>
+                        <option value="A74" data-key="opt_emp_high">4 - 7 Yıl</option>
+                        <option value="A75" data-key="opt_emp_vhigh">≥ 7 Yıl</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="InstallmentRate">📈 Taksit Oranı (%):</label>
-                    <input type="number" name="InstallmentRate" id="InstallmentRate" min="1" max="4" placeholder="Gelirin %'si (1-4)" required>
+                    <label data-key="l_rate">📈 Taksit Oranı (%):</label>
+                    <input type="number" name="InstallmentRate" min="1" max="4" data-ph="ph_rate" placeholder="Gelirin %'si (1-4)" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="PersonalStatusSex">👤 Kişisel Durum & Cinsiyet:</label>
-                    <select name="PersonalStatusSex" id="PersonalStatusSex" required>
-                        <option value="">Seçiniz</option>
-                        <option value="A93">Erkek: Bekar</option>
-                        <option value="A94">Erkek: Evli / Dul</option>
-                        <option value="A91">Erkek: Boşanmış / Ayrılmış</option>
-                        <option value="A95">Kadın: Bekar</option>
-                        <option value="A92">Kadın: Evli / Boşanmış / Ayrılmış</option>
+                    <label data-key="l_personal">👤 Kişisel Durum:</label>
+                    <select name="PersonalStatusSex" required>
+                        <option value="" data-key="opt_select">Seçiniz</option>
+                        <option value="A93" data-key="opt_pers_ms">Erkek: Bekar</option>
+                        <option value="A94" data-key="opt_pers_mm">Erkek: Evli/Dul</option>
+                        <option value="A91" data-key="opt_pers_md">Erkek: Boşanmış</option>
+                        <option value="A95" data-key="opt_pers_fs">Kadın: Bekar</option>
+                        <option value="A92" data-key="opt_pers_fm">Kadın: Evli/Boşanmış</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="OtherDebtors">🤝 Diğer Borçlular/Kefiller:</label>
-                    <select name="OtherDebtors" id="OtherDebtors" required>
-                        <option value="">Seçiniz</option>
-                        <option value="A101">Yok</option>
-                        <option value="A102">Ortak Borçlu</option>
-                        <option value="A103">Kefil</option>
+                    <label data-key="l_debtors">🤝 Diğer Borçlular:</label>
+                    <select name="OtherDebtors" required>
+                        <option value="" data-key="opt_select">Seçiniz</option>
+                        <option value="A101" data-key="opt_debt_none">Yok</option>
+                        <option value="A102" data-key="opt_debt_co">Ortak Borçlu</option>
+                        <option value="A103" data-key="opt_debt_guar">Kefil</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="PresentResidenceSince">🏠 Mevcut İkamet Süresi (Yıl):</label>
-                    <input type="number" name="PresentResidenceSince" id="PresentResidenceSince" min="1" max="4" placeholder="1-4 yıl" required>
+                    <label data-key="l_residence">🏠 İkamet Süresi (Yıl):</label>
+                    <input type="number" name="PresentResidenceSince" min="1" max="4" data-ph="ph_residence" placeholder="1-4 yıl" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="Property">🏡 Mülkiyet Tipi:</label>
-                    <select name="Property" id="Property" required>
-                        <option value="">Seçiniz</option>
-                        <option value="A121">Gayrimenkul (Ev/Arsa)</option>
-                        <option value="A122">Hayat Sigortası / İnşaat Tasarrufları</option>
-                        <option value="A123">Araba veya Diğer Kullanılan Mülkler</option>
-                        <option value="A124">Bilinmiyor / Mülk Yok</option>
+                    <label data-key="l_property">🏡 Mülkiyet Tipi:</label>
+                    <select name="Property" required>
+                        <option value="" data-key="opt_select">Seçiniz</option>
+                        <option value="A121" data-key="opt_prop_real">Gayrimenkul</option>
+                        <option value="A122" data-key="opt_prop_life">Hayat Sig./Tasarruf</option>
+                        <option value="A123" data-key="opt_prop_car">Araba/Diğer</option>
+                        <option value="A124" data-key="opt_prop_none">Yok / Bilinmiyor</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="Age">🎂 Yaş:</label>
-                    <input type="number" name="Age" id="Age" min="19" max="75" placeholder="Örn: 35" required>
+                    <label data-key="l_age">🎂 Yaş:</label>
+                    <input type="number" name="Age" min="19" max="75" data-ph="ph_age" placeholder="Örn: 35" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="OtherInstallmentPlans">💳 Diğer Taksit Planları:</label>
-                    <select name="OtherInstallmentPlans" id="OtherInstallmentPlans" required>
-                        <option value="">Seçiniz</option>
-                        <option value="A141">Banka</option>
-                        <option value="A142">Mağazalar/Kurumlar</option>
-                        <option value="A143">Yok</option>
+                    <label data-key="l_plans">💳 Diğer Taksitler:</label>
+                    <select name="OtherInstallmentPlans" required>
+                        <option value="" data-key="opt_select">Seçiniz</option>
+                        <option value="A141" data-key="opt_plan_bank">Banka</option>
+                        <option value="A142" data-key="opt_plan_store">Mağaza</option>
+                        <option value="A143" data-key="opt_plan_none">Yok</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="Housing">🏘️ Konut Durumu:</label>
-                    <select name="Housing" id="Housing" required>
-                        <option value="">Seçiniz</option>
-                        <option value="A151">Kira</option>
-                        <option value="A152">Kendi Evi</option>
-                        <option value="A153">Kiracılığı bedelsiz / Diğer</option>
+                    <label data-key="l_housing">🏘️ Konut Durumu:</label>
+                    <select name="Housing" required>
+                        <option value="" data-key="opt_select">Seçiniz</option>
+                        <option value="A151" data-key="opt_house_rent">Kira</option>
+                        <option value="A152" data-key="opt_house_own">Ev Sahibi</option>
+                        <option value="A153" data-key="opt_house_free">Bedelsiz</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="NumberExistingCredits">🔢 Mevcut Kredi Sayısı:</label>
-                    <input type="number" name="NumberExistingCredits" id="NumberExistingCredits" min="1" max="4" placeholder="1-4 kredi" required>
+                    <label data-key="l_exist">🔢 Mevcut Kredi Sayısı:</label>
+                    <input type="number" name="NumberExistingCredits" min="1" max="4" data-ph="ph_exist" placeholder="1-4 kredi" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="Job">💼 Meslek:</label>
-                    <select name="Job" id="Job" required>
-                        <option value="">Seçiniz</option>
-                        <option value="A171">İşsiz / Kayıtsız Çalışan</option>
-                        <option value="A172">Niteliksiz / Yerleşik Çalışan</option>
-                        <option value="A173">Nitelikli Çalışan / Memur</option>
-                        <option value="A174">Yönetici / Serbest Meslek Sahibi</option>
+                    <label data-key="l_job">💼 Meslek:</label>
+                    <select name="Job" required>
+                        <option value="" data-key="opt_select">Seçiniz</option>
+                        <option value="A171" data-key="opt_job_unemp">İşsiz/Kayıtsız</option>
+                        <option value="A172" data-key="opt_job_unsk">Vasıfsız</option>
+                        <option value="A173" data-key="opt_job_sk">Vasıflı/Memur</option>
+                        <option value="A174" data-key="opt_job_man">Yönetici/Serbest</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="NumberPeopleMaintenance">👨‍👩‍👧 Bakmakla Yükümlü Kişi:</label>
-                    <input type="number" name="NumberPeopleMaintenance" id="NumberPeopleMaintenance" min="1" max="2" placeholder="1 veya 2" required>
+                    <label data-key="l_maint">👨‍👩‍👧 Bakılan Kişi:</label>
+                    <input type="number" name="NumberPeopleMaintenance" min="1" max="2" data-ph="ph_maint" placeholder="1 veya 2" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="Telephone">📞 Telefon (Tescilli):</label>
-                    <select name="Telephone" id="Telephone" required>
-                        <option value="">Seçiniz</option>
-                        <option value="A191">Yok</option>
-                        <option value="A192">Var (Sabit hat/Kayıtlı GSM)</option>
+                    <label data-key="l_phone">📞 Telefon:</label>
+                    <select name="Telephone" required>
+                        <option value="" data-key="opt_select">Seçiniz</option>
+                        <option value="A191" data-key="opt_phone_no">Yok</option>
+                        <option value="A192" data-key="opt_phone_yes">Var (Kayıtlı)</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="ForeignWorker">🌍 Yabancı İşçi:</label>
-                    <select name="ForeignWorker" id="ForeignWorker" required>
-                        <option value="">Seçiniz</option>
-                        <option value="A201">Hayır</option>
-                        <option value="A202">Evet</option>
+                    <label data-key="l_foreign">🌍 Yabancı İşçi:</label>
+                    <select name="ForeignWorker" required>
+                        <option value="" data-key="opt_select">Seçiniz</option>
+                        <option value="A201" data-key="opt_for_no">Hayır</option>
+                        <option value="A202" data-key="opt_for_yes">Evet</option>
                     </select>
                 </div>
-
             </div>
             
             <div class="button-container">
-                <button type="submit" class="btn-calculate" data-key="btn_calculate">
-                    <span>🔍</span> Kredi Riskini Hesapla
+                <button type="submit" class="btn-calculate">
+                    <span>🔍</span> <span data-key="btn_calc">Kredi Riskini Hesapla</span>
                 </button>
                 <button type="button" class="btn-reset" id="resetBtn">
-                    <span>♻️</span> Formu Sıfırla
+                    <span>♻️</span> <span data-key="btn_reset">Formu Sıfırla</span>
                 </button>
             </div>
         </form>
@@ -490,64 +341,313 @@
     </div>
 
     <script>
+        // --- ÇEVİRİ VERİLERİ ---
+        const translations = {
+            tr: {
+                splash_title: "Veri Bilimi ve Makine Öğrenmesi",
+                splash_subtitle: "Sistem Başlatılıyor...",
+                splash_proc: "Analiz Yapılıyor...",
+                splash_data: "Veriler yapay zeka modelinde işleniyor.",
+                h1_title: "Kredi Risk Analizi",
+                subtitle: "Yapay zeka destekli kredi onay tahmini",
+                l_status: "💰 Mevcut Hesap Durumu:",
+                l_duration: "📅 Kredi Süresi (Ay):",
+                l_history: "📊 Kredi Geçmişi:",
+                l_purpose: "🎯 Kredi Amacı:",
+                l_amount: "💵 Kredi Miktarı (TL):",
+                l_savings: "💎 Tasarruf Hesabı:",
+                l_employ: "👔 İstihdam Süresi:",
+                l_rate: "📈 Taksit Oranı (%):",
+                l_personal: "👤 Kişisel Durum:",
+                l_debtors: "🤝 Diğer Borçlular:",
+                l_residence: "🏠 İkamet Süresi (Yıl):",
+                l_property: "🏡 Mülkiyet Tipi:",
+                l_age: "🎂 Yaş:",
+                l_plans: "💳 Diğer Taksitler:",
+                l_housing: "🏘️ Konut Durumu:",
+                l_exist: "🔢 Mevcut Kredi Sayısı:",
+                l_job: "💼 Meslek:",
+                l_maint: "👨‍👩‍👧 Bakılan Kişi:",
+                l_phone: "📞 Telefon:",
+                l_foreign: "🌍 Yabancı İşçi:",
+                
+                opt_select: "Seçiniz",
+                opt_bal_neg: "Bakiye < 0 TL",
+                opt_bal_low: "0 ≤ x < 200 TL",
+                opt_bal_high: "≥ 200 TL / Maaş Hesabı",
+                opt_bal_none: "Kayıtlı Hesap Yok",
+                
+                opt_hist_good: "Sorunsuz / Düzenli",
+                opt_hist_bank: "Bu Bankada Düzenli",
+                opt_hist_current: "Mevcutlar Düzenli",
+                opt_hist_delay: "Geçmişte Gecikme Var",
+                opt_hist_crit: "Kritik Hesap/Sorunlu",
+                
+                opt_purp_newcar: "Yeni Araba",
+                opt_purp_usedcar: "İkinci El Araba",
+                opt_purp_furn: "Mobilya/Eşya",
+                opt_purp_radio: "Radyo/TV",
+                opt_purp_rep: "Tadilat",
+                opt_purp_edu: "Eğitim",
+                opt_purp_biz: "İş Geliştirme",
+                opt_purp_other: "Diğer",
+                opt_purp_cloth: "Giyim",
+                
+                opt_sav_low: "< 100 TL",
+                opt_sav_mid: "100 - 500 TL",
+                opt_sav_high: "500 - 1000 TL",
+                opt_sav_vhigh: "≥ 1000 TL",
+                opt_sav_unk: "Yok / Bilinmiyor",
+                
+                opt_emp_unemp: "İşsiz",
+                opt_emp_low: "< 1 Yıl",
+                opt_emp_mid: "1 - 4 Yıl",
+                opt_emp_high: "4 - 7 Yıl",
+                opt_emp_vhigh: "≥ 7 Yıl",
+
+                opt_pers_ms: "Erkek: Bekar",
+                opt_pers_mm: "Erkek: Evli/Dul",
+                opt_pers_md: "Erkek: Boşanmış",
+                opt_pers_fs: "Kadın: Bekar",
+                opt_pers_fm: "Kadın: Evli/Boşanmış",
+
+                opt_debt_none: "Yok",
+                opt_debt_co: "Ortak Borçlu",
+                opt_debt_guar: "Kefil",
+
+                opt_prop_real: "Gayrimenkul",
+                opt_prop_life: "Hayat Sig./Tasarruf",
+                opt_prop_car: "Araba/Diğer",
+                opt_prop_none: "Yok / Bilinmiyor",
+
+                opt_plan_bank: "Banka",
+                opt_plan_store: "Mağaza",
+                opt_plan_none: "Yok",
+
+                opt_house_rent: "Kira",
+                opt_house_own: "Ev Sahibi",
+                opt_house_free: "Bedelsiz",
+
+                opt_job_unemp: "İşsiz/Kayıtsız",
+                opt_job_unsk: "Vasıfsız",
+                opt_job_sk: "Vasıflı/Memur",
+                opt_job_man: "Yönetici/Serbest",
+
+                opt_phone_no: "Yok",
+                opt_phone_yes: "Var (Kayıtlı)",
+
+                opt_for_no: "Hayır",
+                opt_for_yes: "Evet",
+
+                btn_calc: "Kredi Riskini Hesapla",
+                btn_reset: "Formu Sıfırla",
+
+                // Placeholders
+                ph_duration: "Örn: 24",
+                ph_amount: "Örn: 3500",
+                ph_rate: "Gelirin %'si (1-4)",
+                ph_residence: "1-4 yıl",
+                ph_age: "Örn: 35",
+                ph_exist: "1-4 kredi",
+                ph_maint: "1 veya 2",
+
+                // Results
+                res_approved: "Kredi Onaylanabilir",
+                res_low_risk: "Düşük Risk",
+                res_conf: "Güven Skoru",
+                res_rejected: "Yüksek Risk Tespit Edildi",
+                res_high_risk: "Kredi Onaylanmayabilir",
+                res_risk_score: "Risk Skoru"
+            },
+            en: {
+                splash_title: "Data Science & Machine Learning",
+                splash_subtitle: "System Starting...",
+                splash_proc: "Analyzing...",
+                splash_data: "Processing data in AI model.",
+                h1_title: "Credit Risk Analysis",
+                subtitle: "AI powered credit approval prediction",
+                l_status: "💰 Checking Account Status:",
+                l_duration: "📅 Duration (Months):",
+                l_history: "📊 Credit History:",
+                l_purpose: "🎯 Purpose:",
+                l_amount: "💵 Credit Amount:",
+                l_savings: "💎 Savings Account:",
+                l_employ: "👔 Employment Duration:",
+                l_rate: "📈 Installment Rate (%):",
+                l_personal: "👤 Personal Status:",
+                l_debtors: "🤝 Other Debtors:",
+                l_residence: "🏠 Residence Duration (Yrs):",
+                l_property: "🏡 Property:",
+                l_age: "🎂 Age:",
+                l_plans: "💳 Other Installments:",
+                l_housing: "🏘️ Housing:",
+                l_exist: "🔢 Existing Credits:",
+                l_job: "💼 Job:",
+                l_maint: "👨‍👩‍👧 Dependents:",
+                l_phone: "📞 Telephone:",
+                l_foreign: "🌍 Foreign Worker:",
+                
+                opt_select: "Select",
+                opt_bal_neg: "Balance < 0 DM",
+                opt_bal_low: "0 ≤ x < 200 DM",
+                opt_bal_high: "≥ 200 DM / Salary",
+                opt_bal_none: "No Checking Account",
+                
+                opt_hist_good: "No Credits / Paid Back",
+                opt_hist_bank: "Paid Back (This Bank)",
+                opt_hist_current: "Existing Paid Back",
+                opt_hist_delay: "Delay in Past",
+                opt_hist_crit: "Critical Account",
+                
+                opt_purp_newcar: "New Car",
+                opt_purp_usedcar: "Used Car",
+                opt_purp_furn: "Furniture",
+                opt_purp_radio: "Radio/TV",
+                opt_purp_rep: "Repairs",
+                opt_purp_edu: "Education",
+                opt_purp_biz: "Business",
+                opt_purp_other: "Other",
+                opt_purp_cloth: "Clothing",
+                
+                opt_sav_low: "< 100 DM",
+                opt_sav_mid: "100 - 500 DM",
+                opt_sav_high: "500 - 1000 DM",
+                opt_sav_vhigh: "≥ 1000 DM",
+                opt_sav_unk: "Unknown / None",
+                
+                opt_emp_unemp: "Unemployed",
+                opt_emp_low: "< 1 Year",
+                opt_emp_mid: "1 - 4 Years",
+                opt_emp_high: "4 - 7 Years",
+                opt_emp_vhigh: "≥ 7 Years",
+
+                opt_pers_ms: "Male: Single",
+                opt_pers_mm: "Male: Married/Widowed",
+                opt_pers_md: "Male: Divorced",
+                opt_pers_fs: "Female: Single",
+                opt_pers_fm: "Female: Married/Divorced",
+
+                opt_debt_none: "None",
+                opt_debt_co: "Co-Applicant",
+                opt_debt_guar: "Guarantor",
+
+                opt_prop_real: "Real Estate",
+                opt_prop_life: "Life Ins./Savings",
+                opt_prop_car: "Car / Other",
+                opt_prop_none: "Unknown / None",
+
+                opt_plan_bank: "Bank",
+                opt_plan_store: "Stores",
+                opt_plan_none: "None",
+
+                opt_house_rent: "Rent",
+                opt_house_own: "Own",
+                opt_house_free: "For Free",
+
+                opt_job_unemp: "Unemployed/Non-res",
+                opt_job_unsk: "Unskilled/Resident",
+                opt_job_sk: "Skilled/Official",
+                opt_job_man: "Management/Self-emp",
+
+                opt_phone_no: "None",
+                opt_phone_yes: "Yes (Registered)",
+
+                opt_for_no: "No",
+                opt_for_yes: "Yes",
+
+                btn_calc: "Calculate Risk",
+                btn_reset: "Reset Form",
+
+                ph_duration: "e.g. 24",
+                ph_amount: "e.g. 3500",
+                ph_rate: "% of Income (1-4)",
+                ph_residence: "1-4 years",
+                ph_age: "e.g. 35",
+                ph_exist: "1-4 credits",
+                ph_maint: "1 or 2",
+
+                res_approved: "Credit Likely Approved",
+                res_low_risk: "Model Prediction: Low Risk",
+                res_conf: "Confidence Score",
+                res_rejected: "High Risk Detected",
+                res_high_risk: "Credit Likely Rejected",
+                res_risk_score: "Risk Score"
+            }
+        };
+
         document.addEventListener('DOMContentLoaded', () => {
-            // Elemanları Seç
             const splashScreen = document.getElementById('splashScreen');
             const splashTitle = document.getElementById('splashTitle');
             const splashSubtitle = document.getElementById('splashSubtitle');
             const creditForm = document.getElementById('creditForm');
             const resultSection = document.getElementById('resultSection');
             const resetBtn = document.getElementById('resetBtn');
+            const langSelect = document.getElementById('langSelect');
 
             // 1. AÇILIŞ EKRANI KAPANIŞI
             setTimeout(() => {
                 splashScreen.classList.add('hidden-splash');
             }, 1500);
 
-            // 2. FORM GÖNDERME (HESAPLA)
-            creditForm.addEventListener('submit', (e) => {
-                e.preventDefault(); 
+            // 2. DİL DEĞİŞTİRME FONKSİYONU
+            function changeLanguage(lang) {
+                document.querySelectorAll('[data-key]').forEach(elem => {
+                    const key = elem.getAttribute('data-key');
+                    if (translations[lang][key]) {
+                        elem.innerText = translations[lang][key];
+                    }
+                });
 
-                // Splash ekranını aç (Analiz Modu)
-                splashTitle.innerText = "Analiz Yapılıyor...";
-                splashSubtitle.innerText = "Veriler yapay zeka modelinde işleniyor.";
-                splashScreen.classList.remove('hidden-splash');
+                document.querySelectorAll('[data-ph]').forEach(input => {
+                    const phKey = input.getAttribute('data-ph');
+                    if (translations[lang][phKey]) {
+                        input.placeholder = translations[lang][phKey];
+                    }
+                });
 
-                // Rastgele Süre (2-5 sn)
-                const randomDelay = Math.floor(Math.random() * 3000) + 2000;
-
-                setTimeout(() => {
-                    // Yükleme ekranını kapat
-                    splashScreen.classList.add('hidden-splash');
-
-                    // ISTEK: Sonuç gelince formu temizle
-                    creditForm.reset();
-
-                    // Sonucu Göster
-                    showRandomResult();
-
-                    // Sonuca kaydır
-                    resultSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-                }, randomDelay);
-            });
-
-            // 3. FORMU SIFIRLA BUTONU İŞLEVİ
-            resetBtn.addEventListener('click', () => {
-                // Formu temizle
-                creditForm.reset();
-                // Eğer ekranda sonuç varsa onu da gizle
                 if (!resultSection.classList.contains('hidden')) {
                     resultSection.classList.add('hidden');
                 }
-                // Sayfanın en üstüne yumuşak kaydır (mobilde rahatlık için)
+            }
+
+            langSelect.addEventListener('change', (e) => {
+                changeLanguage(e.target.value);
+            });
+
+            // 3. FORM GÖNDERME
+            creditForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const currentLang = langSelect.value;
+
+                // Splash Text Güncelle
+                splashTitle.innerText = translations[currentLang].splash_proc;
+                splashSubtitle.innerText = translations[currentLang].splash_data;
+                splashScreen.classList.remove('hidden-splash');
+
+                const randomDelay = Math.floor(Math.random() * 3000) + 2000;
+
+                setTimeout(() => {
+                    splashScreen.classList.add('hidden-splash');
+                    creditForm.reset(); // FORM SIFIRLAMA
+                    showRandomResult(currentLang);
+                    resultSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, randomDelay);
+            });
+
+            // 4. FORMU SIFIRLA
+            resetBtn.addEventListener('click', () => {
+                creditForm.reset();
+                if (!resultSection.classList.contains('hidden')) {
+                    resultSection.classList.add('hidden');
+                }
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
 
-            // 4. SONUÇ ÜRETME (SİMÜLASYON)
-            function showRandomResult() {
+            // 5. SONUÇ GÖSTERME
+            function showRandomResult(lang) {
                 const isApproved = Math.random() > 0.3;
                 const probability = Math.floor(Math.random() * 20) + 80;
+                const t = translations[lang];
 
                 let html = '';
 
@@ -555,18 +655,18 @@
                     html = `
                         <div class="result-box success">
                             <span class="result-icon">✅</span>
-                            <div class="result-title">Kredi Onaylanabilir</div>
-                            <div class="result-desc">Model Tahmini: <strong>Düşük Risk</strong></div>
-                            <div style="margin-top:10px; font-size:0.9rem;">Güven Skoru: %${probability}</div>
+                            <div class="result-title">${t.res_approved}</div>
+                            <div class="result-desc">${t.res_low_risk}</div>
+                            <div style="margin-top:10px; font-size:0.9rem;">${t.res_conf}: %${probability}</div>
                         </div>
                     `;
                 } else {
                     html = `
                         <div class="result-box danger">
                             <span class="result-icon">⚠️</span>
-                            <div class="result-title">Yüksek Risk Tespit Edildi</div>
-                            <div class="result-desc">Model Tahmini: <strong>Kredi Onaylanmayabilir</strong></div>
-                            <div style="margin-top:10px; font-size:0.9rem;">Risk Skoru: %${probability}</div>
+                            <div class="result-title">${t.res_rejected}</div>
+                            <div class="result-desc">${t.res_high_risk}</div>
+                            <div style="margin-top:10px; font-size:0.9rem;">${t.res_risk_score}: %${probability}</div>
                         </div>
                     `;
                 }
