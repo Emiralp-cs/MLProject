@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-key="title">Kredi Riski Tahmin Aracı</title>
+    <title data-key="title">Kredi Risk Analizi</title>
     <style>
         /* Genel Stil Ayarları */
         * {
@@ -21,12 +21,61 @@
             position: relative;
             overflow-x: hidden;
         }
+        
+        /* --- SPLASH SCREEN STİLLERİ --- */
+        #splashScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Ana tema rengi ile uyumlu gradient */
+            background: linear-gradient(135deg, #0097a7 0%, #00bcd4 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999; 
+            opacity: 1;
+            /* Yumuşak kaybolma geçişi */
+            transition: opacity 0.5s ease-out; 
+        }
+
+        .splash-text {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            overflow: hidden; 
+            white-space: nowrap; 
+            border-right: .15em solid white; 
+            max-width: 90%; 
+            text-align: center;
+            padding: 10px;
+            
+            /* Birleştirilmiş Animasyon: Typing ve Yanıp Sönen İmleç */
+            animation: 
+                typing 3s steps(44, end), 
+                blink-caret .75s step-end infinite; 
+        }
+
+        /* Animasyon Keyframes (Yazma Efekti) */
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: white }
+        }
+        /* --- SPLASH SCREEN STİLLERİ SONU --- */
+
 
         /* Animated background circles */
         .bg-circle {
             position: fixed;
             border-radius: 50%;
-            background: rgba(0, 188, 212, 0.1); /* Açık cam göbeği tonu */
+            background: rgba(0, 188, 212, 0.1); 
             animation: float 20s infinite ease-in-out;
             z-index: 0;
         }
@@ -65,7 +114,6 @@
         }
 
         .header-icon {
-            /* Beyin emojisi kaldırıldı */
             height: 0; 
         }
 
@@ -189,7 +237,7 @@
         /* DİL SEÇİM KUTUSU: SOL ÜST KÖŞE (EN SOLA) */
         .lang-toggle-container {
             top: 20px;
-            left: 20px; /* EN SOLA ALINDI */
+            left: 20px; 
             right: auto;
             padding: 0;
             background: none;
@@ -217,10 +265,10 @@
         /* DİĞER KÖŞE YAZILARI KONUMU */
         .top-right {
             top: 20px;
-            right: 20px; /* Sağ üst köşeye net konumlandırıldı */
+            right: 20px; 
         }
         
-        /* Sol en alta konumlandırma (Emir Alp Esmergül Kutusu) */
+        /* Sol en alta konumlandırma */
         .bottom-left {
             bottom: 20px;
             left: 20px;
@@ -229,6 +277,11 @@
 
         /* --- MOBİL UYUMLULUK KODU --- */
         @media (max-width: 768px) {
+            /* Splash text mobil boyut */
+             .splash-text {
+                font-size: 1.5em; /* Mobil için font küçültme */
+            }
+
             /* Mobil için repositioning: Tüm köşe bilgileri akışa dahil edilir */
             .top-right, .lang-toggle-container, .bottom-left {
                 position: static;
@@ -242,13 +295,11 @@
             }
 
             .lang-toggle-container {
-                /* Dil seçimi kutusu üstte kalır */
                 margin-bottom: 15px; 
             }
             
-            /* bottom-left (Designed & Developed) HTML sırasına göre en sonda yer alır. */
             .bottom-left {
-                margin-top: 10px; /* Üstteki öğelerden ayırmak için bir boşluk */
+                margin-top: 10px; 
             }
 
             #langSelect {
@@ -258,16 +309,16 @@
             /* EKLEME: Butonların mobil cihazlarda tam genişlikte ve alt alta olması */
             .button-container {
                 flex-direction: column;
-                gap: 10px; /* Butonlar arasına boşluk ekler */
+                gap: 10px; 
             }
             
             button {
-                width: 100%; /* Her bir butonu tam genişlik yapar */
+                width: 100%; 
             }
         }
         /* --- MOBİL UYUMLULUK KODU SONU --- */
 
-        /* Result Box Styling (Geri kalan stiller) */
+        /* Result Box Styling */
         .result-box {
             margin-top: 40px;
             padding: 30px;
@@ -321,15 +372,15 @@
         /* Başlık (result-title) metin rengi ayarı */
         .result-box.success .result-title,
         .result-box.success .result-probability {
-            color: #155724; /* Başarılı yeşil metin */
+            color: #155724; 
         }
         .result-box.danger .result-title,
         .result-box.danger .result-probability {
-            color: #721c24; /* Tehlikeli kırmızı metin */
+            color: #721c24; 
         }
         .result-box.warning .result-title,
         .result-box.warning .result-probability {
-            color: #856404; /* Uyarı sarı metin */
+            color: #856404; 
         }
 
 
@@ -344,6 +395,11 @@
     </style>
 </head>
 <body>
+    <div id="splashScreen">
+        <div class="splash-text">
+            Veri Bilimi ve Makine Öğrenmesi Dersi 1.Grup
+        </div>
+    </div>
     <div class="bg-circle"></div>
     <div class="bg-circle"></div>
     <div class="bg-circle"></div>
@@ -778,10 +834,10 @@
 
         let currentLang = 'tr';
         const langSelect = document.getElementById('langSelect');
-        langSelect.value = currentLang; // Select kutusunun başlangıç değerini ayarla
+        langSelect.value = currentLang; 
 
         function updateContent(lang) {
-            // data-key'e sahip elementler için metin içeriğini güncelle
+            // 1. Statik metinleri güncelleme
             document.querySelectorAll('[data-key]').forEach(element => {
                 const key = element.getAttribute('data-key');
                 if (translations[lang][key]) {
@@ -789,7 +845,7 @@
                 }
             });
 
-            // Input/select option'larındaki metinleri güncelle
+            // 2. Select option metinlerini güncelleme
             document.querySelectorAll('select option').forEach(option => {
                 const key = option.getAttribute('data-key');
                 if (key && translations[lang][key]) {
@@ -797,7 +853,7 @@
                 }
             });
 
-            // Placeholder içeriğini güncelle
+            // 3. Placeholder metinlerini güncelleme
             document.querySelectorAll('[data-key-placeholder]').forEach(element => {
                 const key = element.getAttribute('data-key-placeholder');
                 if (translations[lang][key]) {
@@ -808,54 +864,65 @@
             document.documentElement.setAttribute('lang', lang);
             document.title = translations[lang]['title'];
 
-            // Sonuç bölümü görünür durumdaysa, içeriğini güncelle
+            // 4. Dinamik sonuç kutusunu güncelleme (HATA DÜZELTME BURADA YAPILDI)
             const resultSection = document.getElementById('resultSection');
             if (!resultSection.classList.contains('hidden')) {
+                const resultBox = resultSection.querySelector('.result-box'); // Ana sonuç kutusunu bul
                 const resultTitle = resultSection.querySelector('.result-title');
                 const resultProbContainer = resultSection.querySelector('.result-probability');
                 
-                if (resultTitle && resultProbContainer) {
-                    // Mevcut durumu belirle
+                if (resultBox && resultTitle && resultProbContainer) {
                     let statusKey = 'res_warning';
-                    if (resultTitle.classList.contains('success')) {
+                    
+                    // Sınıfı ana sonuç kutusundan okuma (Düzeltme)
+                    if (resultBox.classList.contains('success')) { 
                         statusKey = 'res_approved';
-                    } else if (resultTitle.classList.contains('danger')) {
+                    } else if (resultBox.classList.contains('danger')) { 
                         statusKey = 'res_rejected';
                     }
                     
-                    // Olasılık değerini (örn. "%85") koru
                     const strongElement = resultProbContainer.querySelector('strong');
                     const probabilityValue = strongElement ? strongElement.textContent : '';
                     
-                    // Başlık ve olasılık etiketini güncelle (CSS sınıfını koruyarak)
-                    const currentTitleClasses = resultTitle.className;
+                    // Başlık ve Olasılık etiketini güncelle
                     resultTitle.textContent = translations[lang][statusKey];
-                    resultTitle.className = currentTitleClasses; // Sınıfları geri yükle
-                    
                     resultProbContainer.innerHTML = `${translations[lang]['res_probability']} <strong>${probabilityValue}</strong>`;
                 }
             }
         }
 
         langSelect.addEventListener('change', function() {
-            currentLang = this.value; // Seçilen değeri al ('tr' veya 'en')
+            currentLang = this.value; 
             updateContent(currentLang);
         });
         
-        // Başlangıçta Türkçe ayarla
-        updateContent(currentLang);
+        // Sayfa yüklendiğinde içeriği başlat
+        document.addEventListener('DOMContentLoaded', function() {
+            updateContent(currentLang);
+        });
 
-        // --- İSTENEN ÖZELLİK: HESAPLA BUTONUNA BASILDIĞINDA OTOMATİK SIFIRLAMA ---
+        // Hesaplama sonrası sadece inputları sıfırlar (Sonuç görünür kalır)
+        function resetInputsOnly() {
+            document.getElementById('creditForm').reset();
+        }
+
+        // Manuel "Formu Sıfırla" butonu için (Alanları sıfırlar ve Sonucu gizler)
+        function resetForm() {
+            resetInputsOnly(); 
+            document.getElementById('resultSection').classList.add('hidden'); 
+        }
+
         document.getElementById('creditForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             // Simüle edilmiş sonuç (gerçek uygulamada backend'e gönderilecek)
             const mockResult = generateMockResult();
             
+            // Sonucu göster
             displayResult(mockResult);
 
-            // Kredi riskini hesapladıktan ve sonucu gösterdikten sonra formu sıfırla
-            resetForm(); 
+            // Hesaplama sonrası SADECE giriş kutularını sıfırla (Sonuç görünür kalsın)
+            resetInputsOnly(); 
         });
 
         function generateMockResult() {
@@ -879,7 +946,7 @@
             }
 
             return {
-                risk_level: risk_key.replace('res_', ''), // 'approved', 'warning', 'rejected'
+                risk_level: risk_key.replace('res_', ''), 
                 status: translations[currentLang][risk_key],
                 probability: '%' + probabilityValue,
                 icon: icon
@@ -890,7 +957,6 @@
             const resultSection = document.getElementById('resultSection');
             const probabilityNum = parseInt(result.probability.replace('%', ''));
             
-            // Mevcut dilin onay olasılığı etiketini al
             const probabilityLabel = translations[currentLang]['res_probability'];
             const riskLevelClass = result.risk_level;
             
@@ -909,10 +975,22 @@
             resultSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
-        function resetForm() {
-            document.getElementById('creditForm').reset();
-            document.getElementById('resultSection').classList.add('hidden');
-        }
+        // SPLASH SCREEN LOGİĞİ: Yazma animasyonu bittikten sonra fade-out başlar
+        // DOMContentLoaded event'i, updateContent çağrısından sonra çalışır.
+        
+        const splashScreen = document.getElementById('splashScreen');
+        
+        // 3 saniye (yazma animasyonu süresi) sonra fade-out'u başlat
+        setTimeout(() => {
+            // Opaklığı 0 yaparak 0.5 saniyede yumuşakça kaybolmasını sağla
+            splashScreen.style.opacity = '0';
+            
+            // Tamamen kaybolduktan sonra (0.5 saniye sonra) görünmez yap
+            setTimeout(() => {
+                splashScreen.classList.add('hidden');
+            }, 500); 
+            
+        }, 3000); 
     </script>
 </body>
 </html>
