@@ -183,8 +183,7 @@
                         <option value="A44" data-key="opt_purp_rep">Tadilat</option>
                         <option value="A45" data-key="opt_purp_edu">Eğitim</option>
                         <option value="A46" data-key="opt_purp_biz">İş Geliştirme</option>
-                        <option value="A49" data-key="opt_purp_other">Diğer</option>
-                        <option value="A410" data-key="opt_purp_cloth">Giyim</option>
+                        <option value="A49" data-key="opt_purp_real">Gayrimenkul</option><option value="A410" data-key="opt_purp_cloth">Giyim</option>
                     </select>
                 </div>
 
@@ -295,8 +294,7 @@
                     <select name="Job" required>
                         <option value="" data-key="opt_select">Seçiniz</option>
                         <option value="A171" data-key="opt_job_unemp">İşsiz/Kayıtsız</option>
-                        <option value="A172" data-key="opt_job_unsk">Vasıfsız</option>
-                        <option value="A173" data-key="opt_job_sk">Vasıflı/Memur</option>
+                        <option value="A172" data-key="opt_job_ret">Emekli</option><option value="A173" data-key="opt_job_sk">Vasıflı/Memur</option>
                         <option value="A174" data-key="opt_job_man">Yönetici/Serbest</option>
                     </select>
                 </div>
@@ -390,7 +388,7 @@
                 opt_purp_rep: "Tadilat",
                 opt_purp_edu: "Eğitim",
                 opt_purp_biz: "İş Geliştirme",
-                opt_purp_other: "Diğer",
+                opt_purp_real: "Gayrimenkul", // Diğer -> Gayrimenkul
                 opt_purp_cloth: "Giyim",
                 
                 opt_sav_low: "< 100 TL",
@@ -429,7 +427,7 @@
                 opt_house_free: "Bedelsiz",
 
                 opt_job_unemp: "İşsiz/Kayıtsız",
-                opt_job_unsk: "Vasıfsız",
+                opt_job_ret: "Emekli", // Vasıfsız -> Emekli
                 opt_job_sk: "Vasıflı/Memur",
                 opt_job_man: "Yönetici/Serbest",
 
@@ -506,7 +504,7 @@
                 opt_purp_rep: "Repairs",
                 opt_purp_edu: "Education",
                 opt_purp_biz: "Business",
-                opt_purp_other: "Other",
+                opt_purp_real: "Real Estate", // Other -> Real Estate
                 opt_purp_cloth: "Clothing",
                 
                 opt_sav_low: "< 100 DM",
@@ -545,7 +543,7 @@
                 opt_house_free: "For Free",
 
                 opt_job_unemp: "Unemployed/Non-res",
-                opt_job_unsk: "Unskilled/Resident",
+                opt_job_ret: "Retired", // Unskilled/Resident -> Retired
                 opt_job_sk: "Skilled/Official",
                 opt_job_man: "Management/Self-emp",
 
@@ -613,6 +611,9 @@
             langSelect.addEventListener('change', (e) => {
                 changeLanguage(e.target.value);
             });
+
+            // Başlangıç dilini yükle
+            changeLanguage(langSelect.value);
 
             // 3. FORM GÖNDERME
             creditForm.addEventListener('submit', (e) => {
